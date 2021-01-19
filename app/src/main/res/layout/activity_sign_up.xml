@@ -27,47 +27,49 @@
 
         <EditText
             android:layout_marginTop="25dp"
-            android:id="@+id/Fname"
+            android:id="@+id/etxtName"
             android:hint="Full Name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
         <EditText
             android:layout_marginTop="25dp"
-            android:id="@+id/email"
+            android:id="@+id/etxtEmail"
             android:hint="Email Address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
         <EditText
             android:layout_marginTop="25dp"
-            android:id="@+id/phone"
+            android:id="@+id/etxtPhone"
             android:hint="Phone Number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
         <EditText
             android:layout_marginTop="25dp"
-            android:id="@+id/Username"
+            android:id="@+id/etxtUser"
             android:hint="Username"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <EditText
-            android:layout_marginTop="25dp"
-            android:id="@+id/dob"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
         <Spinner
             android:layout_marginTop="25dp"
-            android:id="@+id/Batch"
+            android:id="@+id/spnUser"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
         <EditText
             android:layout_marginTop="25dp"
-            android:id="@+id/Password"
+            android:id="@+id/etxtPass"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:layout_marginTop="25dp"
+            android:id="@+id/etxtRepass"
             android:hint="Password"
             android:inputType="textPassword"
             android:layout_width="match_parent"
@@ -75,8 +77,10 @@
 
         <Button
             android:layout_marginTop="25dp"
-            android:id="@+id/Signup"
+            android:id="@+id/btnSignup"
             android:text="Sign Up"
+            android:textColor="@color/white"
+            android:background="@drawable/custom_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
