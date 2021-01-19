@@ -31,13 +31,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="35dp"
+        android:layout_marginVertical="50dp"
         android:orientation="vertical">
-
-        <Spinner
-            android:layout_marginTop="25dp"
-            android:id="@+id/spnUser"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
 
         <EditText
             android:layout_marginTop="25dp"
@@ -56,11 +51,34 @@
 
         <Button
             android:layout_marginTop="25dp"
-            android:id="@+id/btnSignup"
-            android:text="Sign Up"
+            android:id="@+id/btnLogin"
+            android:text="Login"
             android:textColor="@color/white"
             android:background="@drawable/custom_button"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_marginHorizontal="35dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="Don't have an Account ? "
+            android:textSize="18dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/txtSignup"
+            android:text="Sign Up"
+            android:textSize="18dp"
+            android:textColor="#d9112c"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
     </LinearLayout>

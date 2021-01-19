@@ -1,13 +1,12 @@
 package com.sabin.onlineshoppingportal
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Spinner
+import android.view.View
+import android.widget.*
 
-class SignUpActivity : AppCompatActivity() {
+class SignUpActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var etxtName : EditText
     private lateinit var etxtEmail : EditText
@@ -17,6 +16,7 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var etxtPass : EditText
     private lateinit var etxtRepass : EditText
     private lateinit var btnSignup : Button
+    private lateinit var txtLogin : TextView
 
     private val users = arrayOf("Seller","Buyer")
 
@@ -32,6 +32,9 @@ class SignUpActivity : AppCompatActivity() {
         etxtPass = findViewById(R.id.etxtPass)
         etxtRepass = findViewById(R.id.etxtRepass)
         btnSignup = findViewById(R.id.btnSignup)
+        txtLogin = findViewById(R.id.txtLogin)
+
+        txtLogin.setOnClickListener(this)
 
         val adapter = ArrayAdapter(
                 this,
@@ -39,5 +42,14 @@ class SignUpActivity : AppCompatActivity() {
                 users
         )
         spnUser.adapter = adapter
+    }
+
+    override fun onClick(v: View?) {
+        when (v?.id){
+            R.id.txtLogin -> {
+                val intent = Intent(this,LoginActivity::class.java)
+                startActivity(intent)
+            }
+        }
     }
 }
