@@ -26,8 +26,15 @@
     </LinearLayout>
 
     <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginBottom="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+        <ImageView
+            android:src="@drawable/banner"
+            android:layout_width="match_parent"
+            android:layout_height="135dp"/>
 
 
     </LinearLayout>
@@ -49,6 +56,160 @@
             android:id="@+id/topRecycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:text="Categories"
+        android:textColor="#d9112c"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_marginVertical="15dp"
+        android:layout_marginHorizontal="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="255dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_marginHorizontal="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        <ImageView
+            android:src="@drawable/phone"
+            android:layout_marginTop="10dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"/>
+
+            <TextView
+                android:layout_marginHorizontal="18dp"
+                android:layout_marginTop="10dp"
+                android:text="Phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <ImageView
+                android:src="@drawable/automobile"
+                android:layout_marginTop="10dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"/>
+
+            <TextView
+                android:layout_marginHorizontal="3dp"
+                android:layout_marginTop="10dp"
+                android:text="Automobile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_marginHorizontal="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:src="@drawable/phone"
+                android:layout_marginTop="10dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"/>
+
+            <TextView
+                android:layout_marginHorizontal="18dp"
+                android:layout_marginTop="10dp"
+                android:text="Phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <ImageView
+                android:src="@drawable/automobile"
+                android:layout_marginTop="10dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"/>
+
+            <TextView
+                android:layout_marginHorizontal="3dp"
+                android:layout_marginTop="10dp"
+                android:text="Automobile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_marginHorizontal="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:src="@drawable/phone"
+                android:layout_marginTop="10dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"/>
+
+            <TextView
+                android:layout_marginHorizontal="18dp"
+                android:layout_marginTop="10dp"
+                android:text="Phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <ImageView
+                android:src="@drawable/automobile"
+                android:layout_marginTop="10dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"/>
+
+            <TextView
+                android:layout_marginHorizontal="3dp"
+                android:layout_marginTop="10dp"
+                android:text="Automobile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_marginHorizontal="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:src="@drawable/phone"
+                android:layout_marginTop="10dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"/>
+
+            <TextView
+                android:layout_marginHorizontal="18dp"
+                android:layout_marginTop="10dp"
+                android:text="Phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <ImageView
+                android:src="@drawable/automobile"
+                android:layout_marginTop="10dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"/>
+
+            <TextView
+                android:layout_marginHorizontal="3dp"
+                android:layout_marginTop="10dp"
+                android:text="Automobile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
 
     </LinearLayout>
 
