@@ -3,13 +3,16 @@ package com.sabin.onlineshoppingportal
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.sabin.onlineshoppingportal.adapter.ProductAdapter
 import com.sabin.onlineshoppingportal.adapter.ViewPageAdapter
 import com.sabin.onlineshoppingportal.fragment.AccountFragment
 import com.sabin.onlineshoppingportal.fragment.CartFragment
 import com.sabin.onlineshoppingportal.fragment.HomeFragment
+import com.sabin.onlineshoppingportal.model.Product
 
 class DashboardActivity : AppCompatActivity() {
 

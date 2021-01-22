@@ -5,54 +5,42 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.sabin.onlineshoppingportal.R
+import com.sabin.onlineshoppingportal.adapter.ProductAdapter
+import com.sabin.onlineshoppingportal.model.Product
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class HomeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    private var lstProduct = ArrayList<Product>()
+    private lateinit var topRecycler : RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
-    }
+        val view = inflater.inflate(R.layout.fragment_home, container, false)
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-                HomeFragment().apply {
-                    arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
-                        putString(ARG_PARAM2, param2)
-                    }
-                }
+        topRecycler = view.findViewById(R.id.topRecycler)
+
+        loadProduct()
+
+        val adapter = ProductAdapter(lstProduct, context!!)
+        val mLayoutManager = LinearLayoutManager(context)
+        mLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+        topRecycler.layoutManager = mLayoutManager
+        topRecycler.adapter = adapter
+        return view
+    }
+    private fun loadProduct() {
+        lstProduct.add(Product(5,"Asus Predator","https://images-na.ssl-images-amazon.com/images/I/81g7AiqWrtL._AC_SL1500_.jpg","128000"))
+        lstProduct.add(Product(1,"Unisex Blue Ray Glass","https://images-na.ssl-images-amazon.com/images/I/71eZwv%2B0qIL._AC_SL1500_.jpg","1200"))
+        lstProduct.add(Product(2,"Mackie Studio Monitor","https://images-na.ssl-images-amazon.com/images/I/81SBInXziFL._AC_SL1500_.jpg","50000"))
+        lstProduct.add(Product(3,"Rode Nt1A","https://sc1.musik-produktiv.com/pic-010018924xl/rode-nt1-a-complete-vocal-recording-solution.jpg","38000"))
+        lstProduct.add(Product(4,"Acer Nitro 5","https://static.acer.com/up/Resource/Acer/Laptops/Nitro_5/Image/20191120/Nitro-5-AN515-43-modelpreview.png","108000"))
+
     }
 }
