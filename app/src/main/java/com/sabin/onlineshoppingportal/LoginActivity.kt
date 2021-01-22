@@ -23,6 +23,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         txtSignup = findViewById(R.id.txtSignup)
 
         txtSignup.setOnClickListener(this)
+        btnLogin.setOnClickListener(this)
 
     }
 
@@ -30,6 +31,10 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         when (v?.id){
             R.id.txtSignup -> {
                 val intent = Intent(this,SignUpActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.btnLogin -> {
+                val intent = Intent(this,DashboardActivity::class.java)
                 startActivity(intent)
             }
         }
