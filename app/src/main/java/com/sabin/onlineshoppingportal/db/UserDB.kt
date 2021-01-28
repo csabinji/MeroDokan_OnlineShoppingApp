@@ -11,14 +11,14 @@ import com.sabin.onlineshoppingportal.dao.UserDAO
         entities = [(User::class)],
         version = 1
 )
-abstract class StudentDB :RoomDatabase() {
+abstract class UserDB :RoomDatabase() {
     abstract fun getUserDao() : UserDAO
     companion object{
         @Volatile
-        private var instance : StudentDB? = null
-        fun getInstance(context : Context): StudentDB{
+        private var instance : UserDB? = null
+        fun getInstance(context : Context): UserDB{
             if(instance==null){
-                synchronized(StudentDB::class){
+                synchronized(UserDB::class){
                     instance = buildDatabase(context)
                 }
             }
@@ -27,7 +27,7 @@ abstract class StudentDB :RoomDatabase() {
         private fun buildDatabase(context : Context) =
                 Room.databaseBuilder(
                         context.applicationContext,
-                        StudentDB::class.java,
+                        UserDB::class.java,
                         "UserDB"
                 ).build()
     }
