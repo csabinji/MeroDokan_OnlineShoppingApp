@@ -1,4 +1,4 @@
-package com.sabin.roomdatabaseactivity.db
+package com.sabin.onlineshoppingportal.db
 
 import android.content.Context
 import androidx.room.Database

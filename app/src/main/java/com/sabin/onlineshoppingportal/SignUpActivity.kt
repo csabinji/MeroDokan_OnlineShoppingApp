@@ -1,12 +1,11 @@
 package com.sabin.onlineshoppingportal
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
 import com.sabin.onlineshoppingportal.adapter.User
-import com.sabin.roomdatabaseactivity.db.UserDB
+import com.sabin.onlineshoppingportal.db.UserDB
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.Main
@@ -24,6 +23,7 @@ class SignUpActivity : AppCompatActivity(){
     private lateinit var etxtRepass : EditText
     private lateinit var btnSignup : Button
     private lateinit var txtLogin : TextView
+    private lateinit var selectedItem : String
 
     private val users = arrayOf("Seller","Buyer")
 
@@ -48,12 +48,26 @@ class SignUpActivity : AppCompatActivity(){
         )
         spnUser.adapter = adapter
 
+        spnUser.onItemSelectedListener =
+                object : AdapterView.OnItemSelectedListener {
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                        TODO("Not yet implemented")
+                    }
+
+                    override fun onItemSelected(
+                            parent: AdapterView<*>?, view: View?, position: Int, id: Long
+                    ) {
+                        selectedItem = parent?.getItemAtPosition(position).toString()
+                        Toast.makeText(this@SignUpActivity, "$selectedItem", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
         btnSignup.setOnClickListener {
             val name = etxtName.text.toString()
             val email = etxtEmail.text.toString()
             val phone = etxtPhone.text.toString()
             val username = etxtUser.text.toString()
-            val usertype = spnUser.toString()
+            val usertype = selectedItem
             val password = etxtPass.text.toString()
             val repassword = etxtRepass.text.toString()
             if(password != repassword) {
@@ -68,7 +82,7 @@ class SignUpActivity : AppCompatActivity(){
                             .getUserDao()
                             .registerUser(user)
                     withContext(Main){
-                        Toast.makeText(this@SignUpActivity, "ser Registered Sucessfully", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@SignUpActivity, "Registered Sucessfully", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
