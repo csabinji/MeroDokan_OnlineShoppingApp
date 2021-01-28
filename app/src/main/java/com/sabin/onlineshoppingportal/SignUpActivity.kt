@@ -5,8 +5,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import com.sabin.onlineshoppingportal.adapter.User
+import com.sabin.roomdatabaseactivity.db.UserDB
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class SignUpActivity : AppCompatActivity(), View.OnClickListener {
+class SignUpActivity : AppCompatActivity(){
 
     private lateinit var etxtName : EditText
     private lateinit var etxtEmail : EditText
@@ -34,22 +41,38 @@ class SignUpActivity : AppCompatActivity(), View.OnClickListener {
         btnSignup = findViewById(R.id.btnSignup)
         txtLogin = findViewById(R.id.txtLogin)
 
-        txtLogin.setOnClickListener(this)
-
         val adapter = ArrayAdapter(
                 this,
                 android.R.layout.simple_list_item_1,
                 users
         )
         spnUser.adapter = adapter
-    }
 
-    override fun onClick(v: View?) {
-        when (v?.id){
-            R.id.txtLogin -> {
-                val intent = Intent(this,LoginActivity::class.java)
-                startActivity(intent)
+        btnSignup.setOnClickListener {
+            val name = etxtName.text.toString()
+            val email = etxtEmail.text.toString()
+            val phone = etxtPhone.text.toString()
+            val username = etxtUser.text.toString()
+            val usertype = spnUser.toString()
+            val password = etxtPass.text.toString()
+            val repassword = etxtRepass.text.toString()
+            if(password != repassword) {
+                etxtPass.error = "Password does not matched."
+                etxtPass.requestFocus()
+                return@setOnClickListener
+            }else {
+                val user = User(name, email, phone, username, usertype, password )
+                CoroutineScope(Dispatchers.IO).launch {
+                    UserDB
+                            .getInstance(this@SignUpActivity)
+                            .getUserDao()
+                            .registerUser(user)
+                    withContext(Main){
+                        Toast.makeText(this@SignUpActivity, "ser Registered Sucessfully", Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
         }
     }
+
 }
