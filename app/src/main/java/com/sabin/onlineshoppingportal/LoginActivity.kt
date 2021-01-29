@@ -58,9 +58,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                                 DashboardActivity::class.java))
                     }
                 }
-
-                val intent = Intent(this,DashboardActivity::class.java)
-                startActivity(intent)
             }
         }
     }
