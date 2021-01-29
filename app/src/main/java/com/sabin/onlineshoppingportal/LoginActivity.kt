@@ -5,6 +5,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import com.sabin.onlineshoppingportal.adapter.User
+import com.sabin.onlineshoppingportal.db.UserDB
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -34,6 +40,25 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(intent)
             }
             R.id.btnLogin -> {
+                val username = etxtUser.text.toString()
+                val password = etxtPass.text.toString()
+                var user: User? = null
+                CoroutineScope(Dispatchers.IO).launch {
+                    user = UserDB
+                            .getInstance(this@LoginActivity)
+                            .getUserDao()
+                            .checkUser(username,password)
+                    if(user == null){
+                        withContext(Dispatchers.Main){
+                            Toast.makeText(this@LoginActivity, "Invalid credentials", Toast.LENGTH_SHORT)
+                                    .show()
+                        }
+                    }else{
+                        startActivity(Intent(this@LoginActivity,
+                                DashboardActivity::class.java))
+                    }
+                }
+
                 val intent = Intent(this,DashboardActivity::class.java)
                 startActivity(intent)
             }
