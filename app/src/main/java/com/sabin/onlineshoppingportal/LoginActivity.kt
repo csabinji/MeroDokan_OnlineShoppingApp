@@ -42,6 +42,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(intent)
             }
             R.id.btnLogin -> {
+                saveSharedPref()
                 val username = etxtUser.text.toString()
                 val password = etxtPass.text.toString()
                 var user: User? = null
@@ -62,5 +63,19 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
         }
+    }
+    private fun saveSharedPref() {
+        val username = etxtUser.text.toString()
+        val password = etxtPass.text.toString()
+        val sharedPref = getSharedPreferences("MyPref", MODE_PRIVATE)
+        val editor = sharedPref.edit()
+        editor.putString("username", username)
+        editor.putString("password", password)
+        editor.apply()
+        Toast.makeText(
+                this@LoginActivity,
+                "Username and password saved",
+                Toast.LENGTH_SHORT
+        ).show()
     }
 }
