@@ -6,7 +6,7 @@ data class User (
         var lname : String? = null,
         var username : String? = null,
         var email : String? = null,
-        var phone : Int? = null,
+        var phone : String? = null,
         var address : String? = null,
         var accountType : String? = null,
         var password : String? = null

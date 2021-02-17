@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import com.sabin.onlineshoppingportal.adapter.User
-import com.sabin.onlineshoppingportal.db.UserDB
 import com.sabin.onlineshoppingportal.repository.UserRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -71,7 +70,7 @@ class SignUpActivity : AppCompatActivity(){
             val fname = etxtFname.text.toString()
             val lname = etxtLname.text.toString()
             val email = etxtEmail.text.toString()
-            val phone = etxtPhone.text.toString().toInt()
+            val phone = etxtPhone.text.toString()
             val address = etxtAddress.text.toString()
             val username = etxtUser.text.toString()
             val accountType = selectedItem
@@ -97,7 +96,7 @@ class SignUpActivity : AppCompatActivity(){
 
                     }catch (ex: Exception){
                         withContext(Main){
-                            Toast.makeText(this@SignUpActivity, "Username already taken", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@SignUpActivity, ex.toString(), Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
