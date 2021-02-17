@@ -31,9 +31,9 @@
             android:layout_marginTop="20dp">
 
         <EditText
-            android:layout_marginTop="25dp"
-            android:id="@+id/etxtName"
-            android:hint="Full Name"
+            android:layout_marginTop="10dp"
+            android:id="@+id/etxtFname"
+            android:hint="First Name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -42,10 +42,38 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="10dp">
+
+            <EditText
+                android:layout_marginTop="10dp"
+                android:id="@+id/etxtLname"
+                android:hint="Last Name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <EditText
+                android:layout_marginTop="10dp"
+                android:id="@+id/etxtUser"
+                android:hint="Username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
 
         <EditText
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="10dp"
             android:id="@+id/etxtEmail"
             android:hint="Email Address"
             android:layout_width="match_parent"
@@ -56,10 +84,10 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="10dp">
 
         <EditText
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="10dp"
             android:id="@+id/etxtPhone"
             android:hint="Phone Number"
             android:layout_width="match_parent"
@@ -70,19 +98,19 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="10dp">
 
-        <EditText
-            android:layout_marginTop="25dp"
-            android:id="@+id/etxtUser"
-            android:hint="Username"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            <EditText
+                android:layout_marginTop="10dp"
+                android:id="@+id/etxtAddress"
+                android:hint="Address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <Spinner
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="10dp"
             android:id="@+id/spnUser"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -90,10 +118,10 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="10dp">
 
         <EditText
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="10dp"
             android:id="@+id/etxtPass"
             android:hint="Password"
             android:inputType="textPassword"
@@ -105,10 +133,10 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="10dp">
 
         <EditText
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="10dp"
             android:id="@+id/etxtRepass"
             android:hint="Password"
             android:inputType="textPassword"
@@ -118,7 +146,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="10dp"
             android:id="@+id/btnSignup"
             android:text="Sign Up"
             android:textColor="@color/white"
