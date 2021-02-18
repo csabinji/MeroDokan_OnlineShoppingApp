@@ -18,4 +18,10 @@ class UserRepository
             userAPI.registerUser(user)
         }
     }
+    // User Login
+    suspend fun checkUser(username : String, password : String) : LoginResponse{
+        return apiRequest {
+            userAPI.checkUser(username, password)
+        }
+    }
 }
