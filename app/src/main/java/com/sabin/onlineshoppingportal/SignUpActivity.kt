@@ -1,5 +1,6 @@
 package com.sabin.onlineshoppingportal
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -91,6 +92,12 @@ class SignUpActivity : AppCompatActivity(){
                         if(response.success == true){
                             withContext(Main){
                                 Toast.makeText(this@SignUpActivity, "Registered Successful", Toast.LENGTH_SHORT).show()
+                                startActivity(
+                                        Intent(
+                                                this@SignUpActivity,
+                                                LoginActivity::class.java
+                                        )
+                                )
                             }
                         }
 

@@ -7,16 +7,20 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.core.app.ActivityCompat
+import com.google.android.material.snackbar.Snackbar
 import com.sabin.onlineshoppingportal.adapter.User
+import com.sabin.onlineshoppingportal.api.ServiceBuilder
+import com.sabin.onlineshoppingportal.repository.UserRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class LoginActivity : AppCompatActivity(), View.OnClickListener {
+class LoginActivity : AppCompatActivity(){
 
     private lateinit var etxtUser : EditText
     private lateinit var etxtPass : EditText
+    private lateinit var linearlayout : LinearLayout
     private lateinit var btnLogin : Button
     private lateinit var txtSignup : TextView
 
@@ -26,40 +30,58 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
         etxtUser = findViewById(R.id.etxtUser)
         etxtPass = findViewById(R.id.etxtPass)
+        linearlayout = findViewById(R.id.linearLayout)
         btnLogin = findViewById(R.id.btnLogin)
         txtSignup = findViewById(R.id.txtSignup)
 
-        txtSignup.setOnClickListener(this)
-        btnLogin.setOnClickListener(this)
-
-    }
-
-    override fun onClick(v: View?) {
-        when (v?.id){
-            R.id.txtSignup -> {
-                val intent = Intent(this,SignUpActivity::class.java)
-                startActivity(intent)
-            }
-            R.id.btnLogin -> {
-                saveSharedPref()
-                val username = etxtUser.text.toString()
-                val password = etxtPass.text.toString()
-                var user: User? = null
-            }
+        txtSignup.setOnClickListener {
+            startActivity(Intent(this,SignUpActivity::class.java))
         }
+        btnLogin.setOnClickListener {
+            login()
+        }
+
     }
-    private fun saveSharedPref() {
+
+    private fun login() {
         val username = etxtUser.text.toString()
         val password = etxtPass.text.toString()
-        val sharedPref = getSharedPreferences("MyPref", MODE_PRIVATE)
-        val editor = sharedPref.edit()
-        editor.putString("username", username)
-        editor.putString("password", password)
-        editor.apply()
-        Toast.makeText(
-                this@LoginActivity,
-                "Username and password saved",
-                Toast.LENGTH_SHORT
-        ).show()
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val repository = UserRepository()
+                val response = repository.checkUser(username, password)
+                if (response.success == true) {
+                    ServiceBuilder.token = "Bearer " + response.token
+                    startActivity(
+                            Intent(
+                                    this@LoginActivity,
+                                    DashboardActivity::class.java
+                            )
+                    )
+                    finish()
+                } else {
+                    withContext(Dispatchers.Main) {
+                        val snack =
+                                Snackbar.make(
+                                        linearlayout,
+                                        "Invalid credentials",
+                                        Snackbar.LENGTH_LONG
+                                )
+                        snack.setAction("OK", View.OnClickListener {
+                            snack.dismiss()
+                        })
+                        snack.show()
+                    }
+                }
+
+            } catch (ex: Exception) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(
+                            this@LoginActivity,
+                            "Login error", Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
     }
 }
