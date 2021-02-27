@@ -12,6 +12,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.sabin.onlineshoppingportal.adapter.ProductAdapter
 import com.sabin.onlineshoppingportal.adapter.ViewPageAdapter
 import com.sabin.onlineshoppingportal.fragment.AccountFragment
+import com.sabin.onlineshoppingportal.fragment.AddProductFragment
 import com.sabin.onlineshoppingportal.fragment.CartFragment
 import com.sabin.onlineshoppingportal.fragment.HomeFragment
 import com.sabin.onlineshoppingportal.model.Product
@@ -49,8 +50,8 @@ class DashboardActivity : AppCompatActivity() {
 
             if(lstTitle[position] == "Home"){
                 tab.setIcon(R.drawable.home)
-            }else if(lstTitle[position] == "Cart"){
-                tab.setIcon(R.drawable.cart)
+            }else if(lstTitle[position] == "Add Product"){
+                tab.setIcon(R.drawable.addproduct)
             }else{
                 tab.setIcon(R.drawable.account)
             }
@@ -59,12 +60,12 @@ class DashboardActivity : AppCompatActivity() {
     private fun populateList(){
         lstTitle = ArrayList<String>()
         lstTitle.add("Home")
-        lstTitle.add("Cart")
+        lstTitle.add("Add Product")
         lstTitle.add("Account")
 
         lstFragments = ArrayList<Fragment>()
         lstFragments.add(HomeFragment())
-        lstFragments.add(CartFragment())
+        lstFragments.add(AddProductFragment())
         lstFragments.add(AccountFragment())
 
     }
