@@ -5,6 +5,7 @@ import com.sabin.onlineshoppingportal.api.MyApiRequest
 import com.sabin.onlineshoppingportal.api.ServiceBuilder
 import com.sabin.onlineshoppingportal.api.UserAPI
 import com.sabin.onlineshoppingportal.response.LoginResponse
+import com.sabin.onlineshoppingportal.response.SignupResponse
 
 class UserRepository
     : MyApiRequest() {
@@ -13,7 +14,7 @@ class UserRepository
         ServiceBuilder.buildService(UserAPI::class.java)
 
     // User Registration
-    suspend fun registerUser(user: User): LoginResponse {
+    suspend fun registerUser(user: User): SignupResponse {
         return apiRequest {
             userAPI.registerUser(user)
         }

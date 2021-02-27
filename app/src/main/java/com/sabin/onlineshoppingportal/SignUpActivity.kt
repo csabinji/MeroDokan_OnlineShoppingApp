@@ -46,6 +46,15 @@ class SignUpActivity : AppCompatActivity(){
         btnSignup = findViewById(R.id.btnSignup)
         txtLogin = findViewById(R.id.txtLogin)
 
+        txtLogin.setOnClickListener {
+            startActivity(
+                    Intent(
+                            this@SignUpActivity,
+                            LoginActivity::class.java
+                    )
+            )
+        }
+
         val adapter = ArrayAdapter(
                 this,
                 android.R.layout.simple_list_item_1,
@@ -89,15 +98,16 @@ class SignUpActivity : AppCompatActivity(){
                     try {
                         val userRepository = UserRepository()
                         val response = userRepository.registerUser(user)
-                        if(response.success == true){
+                        if(response.message == "Registration successful."){
                             withContext(Main){
-                                Toast.makeText(this@SignUpActivity, "Registered Successful", Toast.LENGTH_SHORT).show()
                                 startActivity(
                                         Intent(
                                                 this@SignUpActivity,
                                                 LoginActivity::class.java
                                         )
                                 )
+
+                                Toast.makeText(this@SignUpActivity, response.message.toString(), Toast.LENGTH_SHORT).show()
                             }
                         }
 
