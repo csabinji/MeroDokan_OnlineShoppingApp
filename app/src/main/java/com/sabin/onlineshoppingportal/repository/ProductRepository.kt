@@ -26,4 +26,8 @@ class ProductRepository :
             productAPI.uploadImage(ServiceBuilder.token!!, id, body)
         }
     }
+
+    suspend fun getAllProducts(): AllProductResponse {
+
+    }
 }
