@@ -9,10 +9,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.sabin.onlineshoppingportal.R
-import com.sabin.onlineshoppingportal.model.Product
+import com.sabin.onlineshoppingportal.api.ServiceBuilder
+import com.sabin.onlineshoppingportal.entity.Product
 
 class ProductAdapter (
-    val lstProduct : ArrayList<Product>,
+    val lstProduct : MutableList<Product>,
     val context: Context
 ) : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>(){
 
@@ -39,11 +40,15 @@ class ProductAdapter (
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         val product = lstProduct[position]
-        holder.tvName.text = product.ProductName
-        holder.tvPrice.text = product.ProductPrice
+        holder.tvName.text = product.name
+        holder.tvPrice.text = product.price
 
-        Glide.with(context)
-            .load(product.ProductImage)
-            .into(holder.imgProduct)
+//        val imagePath = ServiceBuilder.loadImagePath() + product.image
+//        if(!product.image.equals("upload.jpg")) {
+//            Glide.with(context)
+//                    .load(imagePath)
+//                    .fitCenter()
+//                    .into(holder.imgProduct)
+//        }
     }
 }

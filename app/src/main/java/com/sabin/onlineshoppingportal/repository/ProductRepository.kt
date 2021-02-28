@@ -5,6 +5,7 @@ import com.sabin.onlineshoppingportal.api.ProductAPI
 import com.sabin.onlineshoppingportal.api.ServiceBuilder
 import com.sabin.onlineshoppingportal.entity.Product
 import com.sabin.onlineshoppingportal.response.AddProductResponse
+import com.sabin.onlineshoppingportal.response.AllProductsResponse
 import com.sabin.onlineshoppingportal.response.ImageResponse
 import okhttp3.MultipartBody
 
@@ -27,7 +28,11 @@ class ProductRepository :
         }
     }
 
-    suspend fun getAllProducts(): AllProductResponse {
-
+    suspend fun getAllProducts(): AllProductsResponse {
+        return apiRequest {
+            productAPI.getAllProducts(
+                    ServiceBuilder.token!!
+            )
+        }
     }
 }

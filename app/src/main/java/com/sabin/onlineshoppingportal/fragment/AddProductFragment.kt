@@ -77,12 +77,18 @@ class AddProductFragment : Fragment() {
                 val response = productRepository.addProduct(product)
                 if (response.success == true) {
                     if(imageUrl != null){
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(
+                                    context, imageUrl.toString(),
+                                    Toast.LENGTH_SHORT
+                            ).show()
+                        }
+
                         uploadImage(response.data!!._id!!)
                     }
                     withContext(Dispatchers.Main) {
                         Toast.makeText(
-                            getActivity(),
-                            "Product Added Successfully",
+                            context, response.message.toString(),
                             Toast.LENGTH_SHORT
                         ).show()
                     }
@@ -107,10 +113,16 @@ class AddProductFragment : Fragment() {
                 try {
                     val productRepository = ProductRepository()
                     val response = productRepository.uploadImage(productId, body)
-                    if (response.message == "Post Added") {
+                    if (response.success == true) {
                         withContext(Dispatchers.Main) {
                             Toast.makeText(getActivity(), response.message.toString(), Toast.LENGTH_SHORT)
                                 .show()
+                        }
+                    }
+                    else{
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(getActivity(), response.message.toString(), Toast.LENGTH_SHORT)
+                                    .show()
                         }
                     }
                 } catch (ex: Exception) {
@@ -143,29 +155,7 @@ class AddProductFragment : Fragment() {
         popupMenu.show()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == REQUEST_GALLERY_CODE && data != null) {
-                val selectedImage = data.data
-                val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
-                val contentResolver = getActivity()!!.contentResolver
-                val cursor =
-                    contentResolver.query(selectedImage!!, filePathColumn, null, null, null)
-                cursor!!.moveToFirst()
-                val columnIndex = cursor.getColumnIndex(filePathColumn[0])
-                imageUrl = cursor.getString(columnIndex)
-                imgProduct.setImageBitmap(BitmapFactory.decodeFile(imageUrl))
-                cursor.close()
-            } else if (requestCode == REQUEST_CAMERA_CODE && data != null) {
-                val imageBitmap = data.extras?.get("data") as Bitmap
-                val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-                val file = bitmapToFile(imageBitmap, "$timeStamp.jpg")
-                imageUrl = file!!.absolutePath
-                imgProduct.setImageBitmap(BitmapFactory.decodeFile(imageUrl))
-            }
-        }
-    }
+
 
     private var REQUEST_GALLERY_CODE = 0
     private var REQUEST_CAMERA_CODE = 1
@@ -180,6 +170,30 @@ class AddProductFragment : Fragment() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         startActivityForResult(intent, REQUEST_GALLERY_CODE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == REQUEST_GALLERY_CODE && data != null) {
+                val selectedImage = data.data
+                val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
+                val contentResolver = context?.contentResolver
+                val cursor =
+                        contentResolver?.query(selectedImage!!, filePathColumn, null, null, null)
+                cursor!!.moveToFirst()
+                val columnIndex = cursor.getColumnIndex(filePathColumn[0])
+                imageUrl = cursor.getString(columnIndex)
+                imgProduct.setImageBitmap(BitmapFactory.decodeFile(imageUrl))
+                cursor.close()
+            } else if (requestCode == REQUEST_CAMERA_CODE && data != null) {
+                val imageBitmap = data.extras?.get("data") as Bitmap
+                val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+                val file = bitmapToFile(imageBitmap, "$timeStamp.jpg")
+                imageUrl = file!!.absolutePath
+                imgProduct.setImageBitmap(BitmapFactory.decodeFile(imageUrl))
+            }
+        }
     }
 
     private fun bitmapToFile(
