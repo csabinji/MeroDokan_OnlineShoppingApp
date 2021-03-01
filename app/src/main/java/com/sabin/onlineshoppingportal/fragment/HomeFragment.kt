@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sabin.onlineshoppingportal.R
 import com.sabin.onlineshoppingportal.adapter.ProductAdapter
+import com.sabin.onlineshoppingportal.db.ProductDB
 import com.sabin.onlineshoppingportal.entity.Product
 import com.sabin.onlineshoppingportal.repository.ProductRepository
 import kotlinx.coroutines.CoroutineScope
@@ -41,7 +42,9 @@ class HomeFragment : Fragment() {
             try {
                 val productRepository = ProductRepository()
                 val response = productRepository.getAllProducts()
-
+//                response.data!!.forEach{
+//                    ProductDB.getInstance(context!!).getProductDAO().insertProduct(it)
+//                }
                 if(response.success == true){
                         val lstProduct = response.data!!
                         val mLayoutManager = LinearLayoutManager(context)

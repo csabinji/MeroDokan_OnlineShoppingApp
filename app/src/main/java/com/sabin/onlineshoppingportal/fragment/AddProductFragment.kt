@@ -14,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.sabin.onlineshoppingportal.R
+import com.sabin.onlineshoppingportal.db.ProductDB
 import com.sabin.onlineshoppingportal.entity.Product
 import com.sabin.onlineshoppingportal.repository.ProductRepository
 import kotlinx.coroutines.CoroutineScope
@@ -76,6 +77,7 @@ class AddProductFragment : Fragment() {
                 val productRepository = ProductRepository()
                 val response = productRepository.addProduct(product)
                 if (response.success == true) {
+                    ProductDB.getInstance(context!!).getProductDAO().insertProduct(product)
                     if(imageUrl != null){
                         withContext(Dispatchers.Main) {
                             Toast.makeText(
