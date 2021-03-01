@@ -26,7 +26,7 @@ interface ProductAPI {
     ): Response<ImageResponse>
 
     //get all products
-    @GET("/product/fetch")
+    @GET("product/fetch")
     suspend fun getAllProducts(
             @Header("Authorization") token : String
     ) : Response<AllProductsResponse>

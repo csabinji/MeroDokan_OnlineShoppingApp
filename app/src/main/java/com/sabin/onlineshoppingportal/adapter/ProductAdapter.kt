@@ -22,7 +22,7 @@ class ProductAdapter (
         val tvName : TextView
         val tvPrice :TextView
         init {
-            imgProduct = view.findViewById(R.id.imgProduct)
+            imgProduct = view.findViewById(R.id.imgProduct1)
             tvName = view.findViewById(R.id.tvName)
             tvPrice = view.findViewById(R.id.tvPrice)
         }
@@ -34,21 +34,20 @@ class ProductAdapter (
         return ProductViewHolder(view)
     }
 
-    override fun getItemCount(): Int {
-        return lstProduct.size
-    }
-
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
         val product = lstProduct[position]
         holder.tvName.text = product.name
         holder.tvPrice.text = product.price
 
-//        val imagePath = ServiceBuilder.loadImagePath() + product.image
-//        if(!product.image.equals("upload.jpg")) {
-//            Glide.with(context)
-//                    .load(imagePath)
-//                    .fitCenter()
-//                    .into(holder.imgProduct)
-//        }
+        val imagePath = ServiceBuilder.loadImagePath() + product.image
+        if(!product.image.equals("upload.jpg")) {
+            Glide.with(context)
+                    .load(imagePath)
+                    .fitCenter()
+                    .into(holder.imgProduct)
+        }
+    }
+    override fun getItemCount(): Int {
+        return lstProduct.size
     }
 }

@@ -24,28 +24,31 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
-
         topRecycler = view.findViewById(R.id.topRecycler)
-
         loadProduct()
-
         return view
     }
+
     private fun loadProduct() {
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val productRepository = ProductRepository()
                 val response = productRepository.getAllProducts()
+
                 if(response.success == true){
-                        val lstProduct = response.ProductData
-                        topRecycler.layoutManager = LinearLayoutManager(getActivity())
-                        topRecycler.adapter = ProductAdapter(lstProduct!!, context!!)
+                        val lstProduct = response.data!!
+                        val mLayoutManager = LinearLayoutManager(context)
+                        mLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+                        topRecycler.layoutManager = mLayoutManager
+                        topRecycler.adapter = ProductAdapter(lstProduct, context!!)
+
                 }
             }catch (ex: Exception){
                 withContext(Dispatchers.Main){
