@@ -53,20 +53,20 @@ class HomeFragment : Fragment() {
         }
 
     private fun loadProduct(){
-//        try{
-//            CoroutineScope(Dispatchers.IO).launch {
-//                ProductDB.getInstance(context!!).getProductDAO().deleteAll()
-//                withContext(Dispatchers.Main){
-//                    val productRepository = ProductRepository()
-//                    val response = productRepository.getAllProducts()
-//                    response.data!!.forEach{
-//                    ProductDB.getInstance(context!!).getProductDAO().insertProduct(it)
-//                }
-//                }
-//            }
-//        }catch (ex: Exception){
-//
-//        }
+        try{
+            CoroutineScope(Dispatchers.IO).launch {
+                ProductDB.getInstance(context!!).getProductDAO().deleteAll()
+                withContext(Dispatchers.Main){
+                    val productRepository = ProductRepository()
+                    val response = productRepository.getAllProducts()
+                    response.data!!.forEach{
+                    ProductDB.getInstance(context!!).getProductDAO().insertProduct(it)
+                }
+                }
+            }
+        }catch (ex: Exception){
+
+        }
     }
 
 

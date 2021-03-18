@@ -16,10 +16,7 @@ import kotlinx.coroutines.withContext
 class SignUpActivity : AppCompatActivity(){
 
     private lateinit var etxtFname : EditText
-    private lateinit var etxtLname : EditText
     private lateinit var etxtEmail : EditText
-    private lateinit var etxtAddress : EditText
-    private lateinit var etxtPhone : EditText
     private lateinit var etxtUser : EditText
     private lateinit var spnUser : Spinner
     private lateinit var etxtPass : EditText
@@ -35,11 +32,8 @@ class SignUpActivity : AppCompatActivity(){
         setContentView(R.layout.activity_sign_up)
 
         etxtFname = findViewById(R.id.etxtFname)
-        etxtLname = findViewById(R.id.etxtLname)
         etxtEmail = findViewById(R.id.etxtEmail)
-        etxtPhone = findViewById(R.id.etxtPhone)
         etxtUser = findViewById(R.id.etxtUser)
-        etxtAddress = findViewById(R.id.etxtAddress)
         spnUser = findViewById(R.id.spnUser)
         etxtPass = findViewById(R.id.etxtPass)
         etxtRepass = findViewById(R.id.etxtRepass)
@@ -77,12 +71,9 @@ class SignUpActivity : AppCompatActivity(){
                 }
 
         btnSignup.setOnClickListener {
-            val fname = etxtFname.text.toString()
-            val lname = etxtLname.text.toString()
-            val email = etxtEmail.text.toString()
-            val phone = etxtPhone.text.toString()
-            val address = etxtAddress.text.toString()
+            val fullname = etxtFname.text.toString()
             val username = etxtUser.text.toString()
+            val email = etxtEmail.text.toString()
             val accountType = selectedItem
             val password = etxtPass.text.toString()
             val repassword = etxtRepass.text.toString()
@@ -92,7 +83,7 @@ class SignUpActivity : AppCompatActivity(){
                 etxtPass.requestFocus()
                 return@setOnClickListener
             }else {
-                val user = User(fname = fname, lname = lname, username = username, email = email, phone = phone, address = address, accountType = accountType, password = password )
+                val user = User(fullname = fullname, username = username, email = email, accountType = accountType, password = password )
 
                 CoroutineScope(Dispatchers.IO).launch {
                     try {
