@@ -27,11 +27,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_marginHorizontal="25dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <EditText
             android:id="@+id/etxtPname"
@@ -68,5 +72,6 @@
             android:layout_height="match_parent"/>
 
     </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

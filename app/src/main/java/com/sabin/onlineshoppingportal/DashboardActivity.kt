@@ -15,7 +15,6 @@ import com.sabin.onlineshoppingportal.fragment.AccountFragment
 import com.sabin.onlineshoppingportal.fragment.AddProductFragment
 import com.sabin.onlineshoppingportal.fragment.CartFragment
 import com.sabin.onlineshoppingportal.fragment.HomeFragment
-import com.sabin.onlineshoppingportal.model.Product
 
 class DashboardActivity : AppCompatActivity() {
 
