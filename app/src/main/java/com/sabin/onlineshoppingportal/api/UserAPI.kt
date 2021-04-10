@@ -1,13 +1,12 @@
 package com.sabin.onlineshoppingportal.api
 
 import com.sabin.onlineshoppingportal.adapter.User
+import com.sabin.onlineshoppingportal.response.AllProductsResponse
 import com.sabin.onlineshoppingportal.response.LoginResponse
 import com.sabin.onlineshoppingportal.response.SignupResponse
+import com.sabin.onlineshoppingportal.response.SingleUserResponse
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface UserAPI {
 
@@ -24,4 +23,10 @@ interface UserAPI {
             @Field("username") username : String,
             @Field("password") password : String
     ) : Response<LoginResponse>
+
+    //Fetch
+    @GET("user/fetch/single")
+    suspend fun getSingleUser(
+            @Header("Authorization") token : String
+    ) : Response<SingleUserResponse>
 }

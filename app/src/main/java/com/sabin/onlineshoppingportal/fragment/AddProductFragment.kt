@@ -15,9 +15,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.sabin.onlineshoppingportal.R
-import com.sabin.onlineshoppingportal.db.ProductDB
 import com.sabin.onlineshoppingportal.entity.Product
 import com.sabin.onlineshoppingportal.repository.ProductRepository
+import com.sabin.onlineshoppingportal.repository.UserRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -36,12 +36,12 @@ class AddProductFragment : Fragment() {
     private lateinit var etxtPname : EditText
     private lateinit var etxtPdec : EditText
     private lateinit var etxtPrice : EditText
+    private lateinit var spnProduct : Spinner
     private lateinit var imgProduct : ImageView
+    private lateinit var selectedProduct : String
     private lateinit var btnSave : Button
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private val products = arrayOf("Electronics","Watches","Cloth","Automobile")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,8 +52,30 @@ class AddProductFragment : Fragment() {
         etxtPname = view.findViewById(R.id.etxtPname)
         etxtPdec = view.findViewById(R.id.etxtPdec)
         etxtPrice = view.findViewById(R.id.etxtPrice)
+        spnProduct = view.findViewById(R.id.spnProduct)
         imgProduct = view.findViewById(R.id.imgProduct)
         btnSave = view.findViewById(R.id.btnSave)
+
+        val adapter = ArrayAdapter(
+                context!!,
+                android.R.layout.simple_list_item_1,
+                products
+        )
+        spnProduct.adapter = adapter
+
+        spnProduct.onItemSelectedListener =
+                object : AdapterView.OnItemSelectedListener {
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                        TODO("Not yet implemented")
+                    }
+
+                    override fun onItemSelected(
+                            parent: AdapterView<*>?, view: View?, position: Int, id: Long
+                    ) {
+                        selectedProduct = parent?.getItemAtPosition(position).toString()
+                        Toast.makeText(context!!, "$selectedProduct", Toast.LENGTH_SHORT).show()
+                    }
+                }
 
         btnSave.setOnClickListener {
             uploadProduct()
@@ -63,6 +85,17 @@ class AddProductFragment : Fragment() {
             loadPopUpMenu()
         }
 
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val userRepository = UserRepository()
+                val response = userRepository.getSingleUser()
+                if(response.success==true){
+                    btnSave.setText("${response.data?.username}")
+                }
+            }    catch (ex: Exception) {
+
+            }       }
+
         return view
     }
     private fun uploadProduct() {
@@ -70,15 +103,16 @@ class AddProductFragment : Fragment() {
         val productName = etxtPname.text.toString()
         val productDec = etxtPdec.text.toString()
         val productPrice = etxtPrice.text.toString()
+        val category = selectedProduct
 
-        val product = Product(name = productName, dec = productDec, price = productPrice)
+        val product = Product(name = productName, dec = productDec, price = productPrice, category = category)
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val productRepository = ProductRepository()
                 val response = productRepository.addProduct(product)
                 if (response.success == true) {
-                    ProductDB.getInstance(context!!).getProductDAO().insertProduct(product)
+                    //ProductDB.getInstance(context!!).getProductDAO().insertProduct(product)
                     if(imageUrl != null){
                         withContext(Dispatchers.Main) {
                             Toast.makeText(
@@ -109,9 +143,9 @@ class AddProductFragment : Fragment() {
         if (imageUrl != null) {
             val file = File(imageUrl!!)
             val reqFile =
-                RequestBody.create(MediaType.parse("multipart/form-data"), file)
+                RequestBody.create(MediaType.parse("image/" + file.extension.toLowerCase().replace("jpg","jpeg")),file)
             val body =
-                MultipartBody.Part.createFormData("file", file.name, reqFile)
+                MultipartBody.Part.createFormData("image", file.name, reqFile)
             CoroutineScope(Dispatchers.IO).launch {
                 try {
                     val productRepository = ProductRepository()

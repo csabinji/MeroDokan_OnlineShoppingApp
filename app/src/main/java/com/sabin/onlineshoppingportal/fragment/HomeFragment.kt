@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sabin.onlineshoppingportal.R
@@ -13,85 +12,49 @@ import com.sabin.onlineshoppingportal.adapter.ProductAdapter
 import com.sabin.onlineshoppingportal.db.ProductDB
 import com.sabin.onlineshoppingportal.entity.Product
 import com.sabin.onlineshoppingportal.repository.ProductRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.lang.Exception
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.runBlocking
 
 class HomeFragment : Fragment() {
 
     private lateinit var topRecycler : RecyclerView
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
+    private var products = mutableListOf<Product>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
         topRecycler = view.findViewById(R.id.topRecycler)
-        loadProduct()
-        getProduct()
+
+
+        runBlocking {
+            deleteProducts().collect()
+            loadProduct().collect()
+            getProduct().collect{value -> products = value.toMutableList().asReversed() }
+        }
+        val adapter = ProductAdapter(products, requireContext())
+        topRecycler.adapter = adapter
+        topRecycler.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         return view
     }
 
-    private fun getProduct(){
-        try{
-            CoroutineScope(Dispatchers.IO).launch {
-                val lstProduct = ProductDB.getInstance(context!!).getProductDAO().getAllProduct()
-                withContext(Dispatchers.Main){
-                    val mLayoutManager = LinearLayoutManager(context)
-                    mLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
-                    topRecycler.layoutManager = mLayoutManager
-                    topRecycler.adapter = ProductAdapter(lstProduct, context!!)
-                }
-            }
-        }catch (ex: Exception){
-            }
-        }
+    private fun deleteProducts(): Flow<String> = flow{
+        ProductDB.getInstance(requireContext()).getProductDAO().deleteAll()
+        emit("Done")
+    }
 
-    private fun loadProduct(){
-        try{
-            CoroutineScope(Dispatchers.IO).launch {
-                ProductDB.getInstance(context!!).getProductDAO().deleteAll()
-                withContext(Dispatchers.Main){
-                    val productRepository = ProductRepository()
-                    val response = productRepository.getAllProducts()
-                    response.data!!.forEach{
-                    ProductDB.getInstance(context!!).getProductDAO().insertProduct(it)
-                }
-                }
-            }
-        }catch (ex: Exception){
-
+    private fun loadProduct(): Flow<String> = flow{
+        val productRepository = ProductRepository()
+        val response = productRepository.getAllProducts()
+        response.data!!.forEach {
+            ProductDB.getInstance(requireContext()).getProductDAO().insertProduct(it)
+            emit("Done")
         }
     }
 
-
-//    private fun loadProduct() {
-//
-//        CoroutineScope(Dispatchers.IO).launch {
-//            try {
-//                val productRepository = ProductRepository()
-//                val response = productRepository.getAllProducts()
-//                response.data!!.forEach{
-//                    ProductDB.getInstance(context!!).getProductDAO().insertProduct(it)
-//                }
-//                if(response.success == true){
-//                        val lstProduct = response.data!!
-//                        val mLayoutManager = LinearLayoutManager(context)
-//                        mLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
-//                        topRecycler.layoutManager = mLayoutManager
-//                        topRecycler.adapter = ProductAdapter(lstProduct, context!!)
-//
-//                }
-//            }catch (ex: Exception){
-//                withContext(Dispatchers.Main){
-//                    Toast.makeText(getActivity(), "Error : ${ex.toString()}", Toast.LENGTH_SHORT).show()
-//                }
-//            }
-//        }
-//    }
+    private fun getProduct() : Flow<List<Product>> = flow {
+        val listProducts = ProductDB.getInstance(requireContext()).getProductDAO().getAllProduct()
+        emit(listProducts)
+    }
 }
