@@ -9,6 +9,7 @@ data class Product (
     val name : String? = null,
     val dec : String? = null,
     val price : String? = null,
+    val category : String? = null,
     val image : String? = null
         ){
         @PrimaryKey(autoGenerate = true)

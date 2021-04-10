@@ -6,6 +6,7 @@ import com.sabin.onlineshoppingportal.api.ServiceBuilder
 import com.sabin.onlineshoppingportal.api.UserAPI
 import com.sabin.onlineshoppingportal.response.LoginResponse
 import com.sabin.onlineshoppingportal.response.SignupResponse
+import com.sabin.onlineshoppingportal.response.SingleUserResponse
 
 class UserRepository
     : MyApiRequest() {
@@ -25,4 +26,13 @@ class UserRepository
             userAPI.checkUser(username, password)
         }
     }
+
+    // Get Single User
+
+    suspend fun getSingleUser() : SingleUserResponse{
+        return apiRequest {
+            userAPI.getSingleUser(ServiceBuilder.token!!)
+        }
+    }
+
 }

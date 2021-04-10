@@ -17,7 +17,8 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.OnlineShoppingPortal">
+        android:theme="@style/Theme.OnlineShoppingPortal"
+        android:usesCleartextTraffic="true">
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
