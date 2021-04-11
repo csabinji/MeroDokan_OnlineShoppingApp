@@ -1,10 +1,8 @@
 package com.sabin.onlineshoppingportal.api
 
+import androidx.room.Update
 import com.sabin.onlineshoppingportal.adapter.User
-import com.sabin.onlineshoppingportal.response.AllProductsResponse
-import com.sabin.onlineshoppingportal.response.LoginResponse
-import com.sabin.onlineshoppingportal.response.SignupResponse
-import com.sabin.onlineshoppingportal.response.SingleUserResponse
+import com.sabin.onlineshoppingportal.response.*
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -29,4 +27,10 @@ interface UserAPI {
     suspend fun getSingleUser(
             @Header("Authorization") token : String
     ) : Response<SingleUserResponse>
+
+    //Update
+    @PUT("/user/update")
+    suspend fun UpdateUser(
+        @Body user : User
+    ) : Response<UpdateUserResponse>
 }

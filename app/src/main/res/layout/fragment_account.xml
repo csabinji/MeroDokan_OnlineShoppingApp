@@ -27,6 +27,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_marginHorizontal="25dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:src="@drawable/upload"
+            android:id="@+id/imgProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"/>
+
+    </LinearLayout>
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_marginHorizontal="25dp"
@@ -103,6 +119,23 @@
             android:id="@+id/txtType"
             android:text="hello"
             android:textSize="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_marginHorizontal="25dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btnEdit"
+            android:layout_marginTop="10dp"
+            android:text="Edit Detail"
+            android:textColor="@color/white"
+            android:background="@drawable/custom_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
