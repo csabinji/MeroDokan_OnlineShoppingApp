@@ -35,7 +35,7 @@ class HomeFragment : Fragment() {
         }
         val adapter = ProductAdapter(products, requireContext())
         topRecycler.adapter = adapter
-        topRecycler.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        topRecycler.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         return view
     }
 

@@ -73,7 +73,6 @@ class AddProductFragment : Fragment() {
                             parent: AdapterView<*>?, view: View?, position: Int, id: Long
                     ) {
                         selectedProduct = parent?.getItemAtPosition(position).toString()
-                        Toast.makeText(context!!, "$selectedProduct", Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -84,17 +83,6 @@ class AddProductFragment : Fragment() {
         imgProduct.setOnClickListener {
             loadPopUpMenu()
         }
-
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val userRepository = UserRepository()
-                val response = userRepository.getSingleUser()
-                if(response.success==true){
-                    btnSave.setText("${response.data?.username}")
-                }
-            }    catch (ex: Exception) {
-
-            }       }
 
         return view
     }
