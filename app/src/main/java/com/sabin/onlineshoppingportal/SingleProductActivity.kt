@@ -5,14 +5,19 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.sabin.onlineshoppingportal.adapter.User
 import com.sabin.onlineshoppingportal.api.ServiceBuilder
 import com.sabin.onlineshoppingportal.entity.Cart
 import com.sabin.onlineshoppingportal.entity.Product
+import com.sabin.onlineshoppingportal.repository.CartRepository
+import com.sabin.onlineshoppingportal.repository.UserRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class SingleProductActivity : AppCompatActivity() {
 
@@ -57,7 +62,13 @@ class SingleProductActivity : AppCompatActivity() {
 
             CoroutineScope(Dispatchers.IO).launch{
                 try{
-
+                    val cartRepository = CartRepository()
+                    val response = cartRepository.addtoCart(product._id!!,cart)
+                    if(response.success == true){
+                        withContext(Main){
+                            Toast.makeText(this@SingleProductActivity, "Added", Toast.LENGTH_SHORT).show()
+                        }
+                    }
 
                 }catch (ex: Exception){
 
