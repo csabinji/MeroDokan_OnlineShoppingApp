@@ -58,7 +58,7 @@ class CartFragment : Fragment() {
                 withContext(Dispatchers.Main) {
                     Log.d("Error", ex.localizedMessage)
                     Toast.makeText(
-                            getActivity(),
+                            context!!,
                             ex.localizedMessage,
                             Toast.LENGTH_SHORT
                     ).show()
