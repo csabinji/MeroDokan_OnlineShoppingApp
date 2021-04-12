@@ -7,6 +7,7 @@ import com.sabin.onlineshoppingportal.entity.Product
 import com.sabin.onlineshoppingportal.response.AddProductResponse
 import com.sabin.onlineshoppingportal.response.AllProductsResponse
 import com.sabin.onlineshoppingportal.response.ImageResponse
+import com.sabin.onlineshoppingportal.response.SingeProductResponse
 import okhttp3.MultipartBody
 
 class ProductRepository :
@@ -33,6 +34,14 @@ class ProductRepository :
             productAPI.getAllProducts(
                     ServiceBuilder.token!!
             )
+        }
+    }
+
+    // Single Product
+
+    suspend fun getProduct(id:String): SingeProductResponse{
+        return apiRequest {
+            productAPI.getSingleProduct(ServiceBuilder.token!!, id)
         }
     }
 }

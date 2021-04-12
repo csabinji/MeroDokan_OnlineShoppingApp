@@ -4,6 +4,7 @@ import com.sabin.onlineshoppingportal.entity.Product
 import com.sabin.onlineshoppingportal.response.AddProductResponse
 import com.sabin.onlineshoppingportal.response.AllProductsResponse
 import com.sabin.onlineshoppingportal.response.ImageResponse
+import com.sabin.onlineshoppingportal.response.SingeProductResponse
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.*
@@ -30,4 +31,10 @@ interface ProductAPI {
     suspend fun getAllProducts(
             @Header("Authorization") token : String
     ) : Response<AllProductsResponse>
+
+    @GET("product/fetch/single/{id}")
+    suspend fun getSingleProduct(
+            @Header("Authorization") token: String,
+            @Path("id") id: String
+    ) : Response<SingeProductResponse>
 }

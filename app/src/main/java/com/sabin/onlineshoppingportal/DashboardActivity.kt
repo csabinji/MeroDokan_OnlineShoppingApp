@@ -3,18 +3,26 @@ package com.sabin.onlineshoppingportal
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.sabin.onlineshoppingportal.adapter.ProductAdapter
 import com.sabin.onlineshoppingportal.adapter.ViewPageAdapter
+import com.sabin.onlineshoppingportal.api.ServiceBuilder
 import com.sabin.onlineshoppingportal.fragment.AccountFragment
 import com.sabin.onlineshoppingportal.fragment.AddProductFragment
 import com.sabin.onlineshoppingportal.fragment.CartFragment
 import com.sabin.onlineshoppingportal.fragment.HomeFragment
+import com.sabin.onlineshoppingportal.repository.UserRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class DashboardActivity : AppCompatActivity() {
 
@@ -28,6 +36,8 @@ class DashboardActivity : AppCompatActivity() {
     private lateinit var lstFragments : ArrayList<Fragment>
     private lateinit var tabs : TabLayout
     private lateinit var viewPager : ViewPager2
+
+    private var at = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,23 +59,44 @@ class DashboardActivity : AppCompatActivity() {
 
             if(lstTitle[position] == "Home"){
                 tab.setIcon(R.drawable.home)
+            }else if(lstTitle[position] == "Cart"){
+                tab.setIcon(R.drawable.cart)
             }else if(lstTitle[position] == "Add Product"){
                 tab.setIcon(R.drawable.addproduct)
-            }else{
+            }else if(lstTitle[position] == "Account"){
                 tab.setIcon(R.drawable.account)
             }
         }.attach()
     }
     private fun populateList(){
+
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val userRepository = UserRepository()
+                val response = userRepository.getSingleUser()
+                if(response.success == true){
+                    withContext(Dispatchers.Main) {
+                        at = "${response.data?.accountType}"
+                    }
+                    }
+
+            } catch (ex: Exception) {
+
+            }
+        }
+
         lstTitle = ArrayList<String>()
         lstTitle.add("Home")
+        lstTitle.add("Cart")
         lstTitle.add("Add Product")
         lstTitle.add("Account")
 
         lstFragments = ArrayList<Fragment>()
         lstFragments.add(HomeFragment())
+        lstFragments.add(CartFragment())
         lstFragments.add(AddProductFragment())
         lstFragments.add(AccountFragment())
+
 
     }
     private fun requestPermission() {

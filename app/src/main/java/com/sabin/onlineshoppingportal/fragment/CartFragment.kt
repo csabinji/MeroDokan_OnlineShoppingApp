@@ -1,58 +1,72 @@
 package com.sabin.onlineshoppingportal.fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.sabin.onlineshoppingportal.R
+import com.sabin.onlineshoppingportal.adapter.CartAdapter
+import com.sabin.onlineshoppingportal.adapter.ProductAdapter
+import com.sabin.onlineshoppingportal.entity.Cart
+import com.sabin.onlineshoppingportal.entity.Product
+import com.sabin.onlineshoppingportal.repository.CartRepository
+import com.sabin.onlineshoppingportal.repository.ProductRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [CartFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class CartFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var topRecycler : RecyclerView
+    private var lstCart = mutableListOf<Cart>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cart, container, false)
-    }
+        val view = inflater.inflate(R.layout.fragment_cart, container, false)
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CartFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-                CartFragment().apply {
-                    arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
-                        putString(ARG_PARAM2, param2)
+        topRecycler = view.findViewById(R.id.topRecycler)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val cartRepository = CartRepository()
+                val response = cartRepository.getCart()
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(getActivity(),response.success.toString(), Toast.LENGTH_SHORT)
+                            .show()
+                }
+                if (response.success == true) {
+                    lstCart = response.data!!
+                    withContext(Dispatchers.Main) {
+                        topRecycler.adapter = CartAdapter(lstCart, context!!)
+                        topRecycler.layoutManager = LinearLayoutManager(context)
                     }
                 }
+                else{
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(getActivity(),"", Toast.LENGTH_SHORT)
+                                .show()
+                    }
+                }
+            } catch (ex: Exception) {
+                withContext(Dispatchers.Main) {
+                    Log.d("Error", ex.localizedMessage)
+                    Toast.makeText(
+                            getActivity(),
+                            ex.localizedMessage,
+                            Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
+
+        return view
     }
+
 }
