@@ -64,7 +64,7 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/ImgCart"
+            android:id="@+id/ImgOrder"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="5dp"

@@ -11,10 +11,13 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.material.internal.ContextUtils.getActivity
 import com.sabin.onlineshoppingportal.R
 import com.sabin.onlineshoppingportal.api.ServiceBuilder
 import com.sabin.onlineshoppingportal.entity.Cart
+import com.sabin.onlineshoppingportal.entity.Order
 import com.sabin.onlineshoppingportal.repository.CartRepository
+import com.sabin.onlineshoppingportal.repository.OrderRepository
 import com.sabin.onlineshoppingportal.repository.ProductRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -33,12 +36,14 @@ class CartAdapter (
                 val tvPrice : TextView
                 val tvAddedBy : TextView
                 val imgDelete : ImageView
+                val imgOrder : ImageView
                 init {
                     imgProduct = view.findViewById(R.id.imgProduct)
                     tvName = view.findViewById(R.id.tvName)
                     tvPrice = view.findViewById(R.id.tvPrice)
                     tvAddedBy = view.findViewById(R.id.tvAddedby)
                     imgDelete = view.findViewById(R.id.imgDelete)
+                    imgOrder = view.findViewById(R.id.ImgOrder)
                 }
             }
 
@@ -77,6 +82,26 @@ class CartAdapter (
             }
         }
         holder.tvAddedBy.text = cart.quantity.toString()
+
+        holder.imgOrder.setOnClickListener {
+            val quantity = cart.quantity.toString()
+
+            val order = Order(quantity = quantity)
+
+            CoroutineScope(Dispatchers.IO).launch {
+                try{
+                    val orderRepository = OrderRepository()
+                    val response = orderRepository.addtoOrder(cart._id!!,order)
+                    if(response.success==true){
+                        withContext(Main){
+                            Toast.makeText(context, "Order Placed", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }catch (ex: Exception){
+
+                }
+            }
+        }
 
         holder.imgDelete.setOnClickListener{
             val builder = AlertDialog.Builder(context)
