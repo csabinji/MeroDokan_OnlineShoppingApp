@@ -15,10 +15,16 @@ interface OrderAPI {
             @Body order : Order
     ) : Response<OrderResponse>
 
-    //View Order
+    //View Order for buyer
     @GET("/aorder")
     suspend fun getOrder(
         @Header("Authorization") token : String
+    ) : Response<ViewOrderResponse>
+
+    //View Order for Seller
+    @GET("/asorder")
+    suspend fun getSOrder(
+            @Header("Authorization") token : String
     ) : Response<ViewOrderResponse>
 
     //Delete Product from Order

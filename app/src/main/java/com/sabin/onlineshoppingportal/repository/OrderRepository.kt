@@ -19,12 +19,22 @@ MyApiRequest() {
         }
     }
 
-    // Order List
+    // Order List for Buyer
 
     suspend fun getOrder() : ViewOrderResponse {
         return apiRequest {
             OrderAPI.getOrder(
                 ServiceBuilder.token!!
+            )
+        }
+    }
+
+    // Order List for Seller
+
+    suspend fun getSOrder() : ViewOrderResponse {
+        return apiRequest {
+            OrderAPI.getSOrder(
+                    ServiceBuilder.token!!
             )
         }
     }

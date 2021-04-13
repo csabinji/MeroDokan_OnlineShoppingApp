@@ -52,6 +52,7 @@ class LoginActivity : AppCompatActivity(){
                 val response = repository.checkUser(username, password)
                 if (response.success == true) {
                     ServiceBuilder.token = "Bearer " + response.token
+                    saveMe()
                     startActivity(
                             Intent(
                                     this@LoginActivity,
@@ -83,5 +84,17 @@ class LoginActivity : AppCompatActivity(){
                 }
             }
         }
+    }
+
+    private fun saveMe(){
+        val email = etxtUser.text.toString()
+        val password = etxtPass.text.toString()
+        val sharedPref = getSharedPreferences("user", MODE_PRIVATE)
+        val editor = sharedPref.edit()
+        editor.putBoolean("isLoggedIn", true)
+        editor.putString("email", email)
+        editor.putString("password", password)
+        editor.apply()
+
     }
 }

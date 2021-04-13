@@ -16,6 +16,7 @@ import com.sabin.onlineshoppingportal.entity.Order
 import com.sabin.onlineshoppingportal.repository.CartRepository
 import com.sabin.onlineshoppingportal.repository.OrderRepository
 import com.sabin.onlineshoppingportal.repository.ProductRepository
+import com.sabin.onlineshoppingportal.repository.UserRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -67,7 +68,15 @@ class OrderAdapter (
                                 .fitCenter()
                                 .into(holder.imgProduct)
                         }
+                    }
 
+                    val userRepository = UserRepository()
+                    val response = userRepository.getBuyer(order.bname!!)
+                    if(response.success == true){
+                        val user = response.data!!
+                        withContext(Dispatchers.Main){
+                            holder.tvAddedBy.text = user?.username
+                        }
                     }
                     withContext(Dispatchers.Main) {
                         notifyDataSetChanged()

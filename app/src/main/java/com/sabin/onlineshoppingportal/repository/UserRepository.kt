@@ -4,10 +4,7 @@ import com.sabin.onlineshoppingportal.adapter.User
 import com.sabin.onlineshoppingportal.api.MyApiRequest
 import com.sabin.onlineshoppingportal.api.ServiceBuilder
 import com.sabin.onlineshoppingportal.api.UserAPI
-import com.sabin.onlineshoppingportal.response.LoginResponse
-import com.sabin.onlineshoppingportal.response.SignupResponse
-import com.sabin.onlineshoppingportal.response.SingleUserResponse
-import com.sabin.onlineshoppingportal.response.UpdateUserResponse
+import com.sabin.onlineshoppingportal.response.*
 
 class UserRepository
     : MyApiRequest() {
@@ -41,6 +38,14 @@ class UserRepository
     suspend fun updateUser(user: User) : UpdateUserResponse {
         return apiRequest {
             userAPI.UpdateUser(ServiceBuilder.token!!,user)
+        }
+    }
+
+    // Single Product
+
+    suspend fun getBuyer(id:String): UserResponse {
+        return apiRequest {
+            userAPI.getBuyer(ServiceBuilder.token!!, id)
         }
     }
 

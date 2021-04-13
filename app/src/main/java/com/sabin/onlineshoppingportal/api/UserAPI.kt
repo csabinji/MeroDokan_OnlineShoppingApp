@@ -34,4 +34,10 @@ interface UserAPI {
             @Header("Authorization") token : String,
             @Body user : User
     ) : Response<UpdateUserResponse>
+
+    @GET("/user/fetch/single/{id}")
+    suspend fun getBuyer(
+            @Header("Authorization") token: String,
+            @Path("id") id: String
+    ) : Response<UserResponse>
 }
