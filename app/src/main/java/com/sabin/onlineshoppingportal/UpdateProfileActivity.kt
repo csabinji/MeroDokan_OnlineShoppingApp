@@ -72,8 +72,14 @@ class UpdateProfileActivity : AppCompatActivity() {
                 try{
                     val userRepository = UserRepository()
                     val response = userRepository.updateUser(user)
-
-                    Toast.makeText(this@UpdateProfileActivity, response.message.toString(), Toast.LENGTH_SHORT).show()
+                    withContext(Dispatchers.Main){
+                        Toast.makeText(this@UpdateProfileActivity, "clicked", Toast.LENGTH_SHORT).show()
+                    }
+                    if (response.success==true){
+                        withContext(Dispatchers.Main){
+                            Toast.makeText(this@UpdateProfileActivity, response.message.toString(), Toast.LENGTH_SHORT).show()
+                        }
+                    }
                 }catch (ex: Exception){
 
                 }

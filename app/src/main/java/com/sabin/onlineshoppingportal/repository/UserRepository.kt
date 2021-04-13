@@ -40,7 +40,7 @@ class UserRepository
 
     suspend fun updateUser(user: User) : UpdateUserResponse {
         return apiRequest {
-            userAPI.UpdateUser(user)
+            userAPI.UpdateUser(ServiceBuilder.token!!,user)
         }
     }
 

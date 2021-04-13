@@ -19,7 +19,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OnlineShoppingPortal"
         android:usesCleartextTraffic="true">
-        <activity android:name=".CartActivity"></activity>
+        <activity android:name=".OrderActivity"></activity>
+        <activity android:name=".CartActivity" />
         <activity android:name=".SingleProductActivity" />
         <activity android:name=".UpdateProfileActivity" />
         <activity android:name=".SplashActivity">

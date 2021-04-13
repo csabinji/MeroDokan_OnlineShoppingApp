@@ -29,8 +29,9 @@ interface UserAPI {
     ) : Response<SingleUserResponse>
 
     //Update
-    @PUT("/user/update")
+    @PUT("/auser/update")
     suspend fun UpdateUser(
-        @Body user : User
+            @Header("Authorization") token : String,
+            @Body user : User
     ) : Response<UpdateUserResponse>
 }

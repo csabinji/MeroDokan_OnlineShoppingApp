@@ -12,52 +12,48 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.sabin.onlineshoppingportal.R
 import com.sabin.onlineshoppingportal.api.ServiceBuilder
-import com.sabin.onlineshoppingportal.entity.Cart
 import com.sabin.onlineshoppingportal.entity.Order
 import com.sabin.onlineshoppingportal.repository.CartRepository
 import com.sabin.onlineshoppingportal.repository.OrderRepository
 import com.sabin.onlineshoppingportal.repository.ProductRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class CartAdapter(
-    val lstCart: MutableList<Cart>,
-    val context: Context
-        ) : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
+class OrderAdapter (
+        val lstOrder : MutableList<Order>,
+        val context: Context
+        ) : RecyclerView.Adapter<OrderAdapter.OrderViewHolder>() {
 
-            class CartViewHolder(view: View) : RecyclerView.ViewHolder(view){
-                val imgProduct : ImageView
-                val tvName : TextView
-                val tvPrice : TextView
-                val tvAddedBy : TextView
-                val imgDelete : ImageView
-                val imgOrder : ImageView
-                init {
-                    imgProduct = view.findViewById(R.id.imgProduct)
-                    tvName = view.findViewById(R.id.tvName)
-                    tvPrice = view.findViewById(R.id.tvPrice)
-                    tvAddedBy = view.findViewById(R.id.tvAddedby)
-                    imgDelete = view.findViewById(R.id.imgDelete)
-                    imgOrder = view.findViewById(R.id.ImgOrder)
-                }
-            }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.cart_layout,parent,false)
-        return CartViewHolder(view)
+    class OrderViewHolder(view: View) : RecyclerView.ViewHolder(view){
+        val imgProduct : ImageView
+        val tvName : TextView
+        val tvPrice : TextView
+        val tvAddedBy : TextView
+        val imgDelete : ImageView
+        init {
+            imgProduct = view.findViewById(R.id.imgProduct)
+            tvName = view.findViewById(R.id.tvName)
+            tvPrice = view.findViewById(R.id.tvPrice)
+            tvAddedBy = view.findViewById(R.id.tvAddedby)
+            imgDelete = view.findViewById(R.id.imgDelete)
+        }
     }
 
-    override fun onBindViewHolder(holder: CartViewHolder, position: Int) {
-       val cart = lstCart[position]
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderViewHolder {
+        val view = LayoutInflater.from(parent.context)
+                .inflate(R.layout.order_layout,parent,false)
+        return OrderViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: OrderViewHolder, position: Int) {
+        val order = lstOrder[position]
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val productRepository = ProductRepository()
-                val response = productRepository.getProduct(cart.product!!)
+                val response = productRepository.getProduct(order.product!!)
                 if(response.success==true){
                     val product = response.data!!
                     withContext(Dispatchers.Main){
@@ -67,43 +63,19 @@ class CartAdapter(
                         val imagePath = ServiceBuilder.loadImagePath() + product.image
                         if(!product.image.equals("upload.jpg")) {
                             Glide.with(context)
-                                    .load(imagePath)
-                                    .fitCenter()
-                                    .into(holder.imgProduct)
+                                .load(imagePath)
+                                .fitCenter()
+                                .into(holder.imgProduct)
                         }
 
                     }
-                    withContext(Main) {
+                    withContext(Dispatchers.Main) {
                         notifyDataSetChanged()
                     }
                 }
 
             }catch (ex: Exception){
 
-            }
-        }
-        holder.tvAddedBy.text = cart.quantity.toString()
-
-        holder.imgOrder.setOnClickListener {
-            val quantity = cart.quantity.toString()
-
-            val order = Order(quantity = quantity)
-
-            CoroutineScope(Dispatchers.IO).launch {
-                try{
-                    val orderRepository = OrderRepository()
-                    val response = orderRepository.addtoOrder(cart._id!!,order)
-                    withContext(Main){
-                        Toast.makeText(context, "Clicked", Toast.LENGTH_SHORT).show()
-                    }
-                    if(response.success==true){
-                        withContext(Main){
-                            Toast.makeText(context, "Order Placed", Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                }catch (ex: Exception){
-
-                }
             }
         }
 
@@ -115,20 +87,20 @@ class CartAdapter(
             builder.setPositiveButton("Yes") { _, _ ->
                 CoroutineScope(Dispatchers.IO).launch {
                     try {
-                        val cartRepository = CartRepository()
-                        val response = cartRepository.deleteCart(cart._id!!)
+                        val orderRepository = OrderRepository()
+                        val response = orderRepository.deleteOrder(order._id!!)
                         if (response.success == true) {
                             withContext(Dispatchers.Main) {
                                 Toast.makeText(
-                                        context,
-                                        "Product Deleted",
-                                        Toast.LENGTH_SHORT
+                                    context,
+                                    "Product Deleted",
+                                    Toast.LENGTH_SHORT
                                 )
-                                        .show()
+                                    .show()
                             }
                         }
-                        withContext(Main) {
-                            lstCart.remove(cart)
+                        withContext(Dispatchers.Main) {
+                            lstOrder.remove(order)
                             notifyDataSetChanged()
                         }
 
@@ -150,6 +122,6 @@ class CartAdapter(
     }
 
     override fun getItemCount(): Int {
-        return lstCart.size
+        return lstOrder.size
     }
 }

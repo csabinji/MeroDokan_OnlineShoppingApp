@@ -2,13 +2,9 @@ package com.sabin.onlineshoppingportal.api
 
 import com.sabin.onlineshoppingportal.entity.Cart
 import com.sabin.onlineshoppingportal.entity.Order
-import com.sabin.onlineshoppingportal.response.CartResponse
-import com.sabin.onlineshoppingportal.response.OrderResponse
+import com.sabin.onlineshoppingportal.response.*
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.Header
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface OrderAPI {
     // Order
@@ -19,4 +15,16 @@ interface OrderAPI {
             @Body order : Order
     ) : Response<OrderResponse>
 
+    //View Order
+    @GET("/aorder")
+    suspend fun getOrder(
+        @Header("Authorization") token : String
+    ) : Response<ViewOrderResponse>
+
+    //Delete Product from Order
+    @DELETE("/order/delete/{id}")
+    suspend fun deleteOrder(
+        @Header("Authorization") token: String,
+        @Path("id") id:String,
+    ) : Response<DeleteOrderResponse>
 }

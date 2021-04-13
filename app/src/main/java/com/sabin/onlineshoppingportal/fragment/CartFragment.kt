@@ -11,11 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sabin.onlineshoppingportal.R
 import com.sabin.onlineshoppingportal.adapter.CartAdapter
-import com.sabin.onlineshoppingportal.adapter.ProductAdapter
 import com.sabin.onlineshoppingportal.entity.Cart
-import com.sabin.onlineshoppingportal.entity.Product
 import com.sabin.onlineshoppingportal.repository.CartRepository
-import com.sabin.onlineshoppingportal.repository.ProductRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
