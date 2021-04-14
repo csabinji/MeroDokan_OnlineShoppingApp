@@ -52,6 +52,7 @@ class LoginActivity : AppCompatActivity(){
                 val response = repository.checkUser(username, password)
                 if (response.success == true) {
                     ServiceBuilder.token = "Bearer " + response.token
+                    ServiceBuilder.accountType = response.accountType
                     saveMe()
                     startActivity(
                             Intent(

@@ -4,10 +4,7 @@ import com.sabin.onlineshoppingportal.api.MyApiRequest
 import com.sabin.onlineshoppingportal.api.ProductAPI
 import com.sabin.onlineshoppingportal.api.ServiceBuilder
 import com.sabin.onlineshoppingportal.entity.Product
-import com.sabin.onlineshoppingportal.response.AddProductResponse
-import com.sabin.onlineshoppingportal.response.AllProductsResponse
-import com.sabin.onlineshoppingportal.response.ImageResponse
-import com.sabin.onlineshoppingportal.response.SingeProductResponse
+import com.sabin.onlineshoppingportal.response.*
 import okhttp3.MultipartBody
 
 class ProductRepository :
@@ -37,11 +34,29 @@ class ProductRepository :
         }
     }
 
+    suspend fun getMyProducts(): MyProductResponse {
+        return apiRequest {
+            productAPI.getMyProducts(
+                ServiceBuilder.token!!
+            )
+        }
+    }
+
     // Single Product
 
     suspend fun getProduct(id:String): SingeProductResponse{
         return apiRequest {
             productAPI.getSingleProduct(ServiceBuilder.token!!, id)
+        }
+    }
+
+    // Delete Product
+
+    suspend fun deleteProduct(product : String) : DeleteProductResponse {
+        return apiRequest {
+            productAPI.deleteProduct(
+                ServiceBuilder.token!!, product
+            )
         }
     }
 }

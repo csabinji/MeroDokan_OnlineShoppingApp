@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -33,17 +31,17 @@
 
         <ImageView
             android:id="@+id/imgProfile"
-            android:src="@drawable/upload"
             android:layout_width="wrap_content"
+            android:layout_height="50dp"
             android:layout_gravity="center"
-            android:layout_height="50dp"/>
+            android:src="@drawable/upload" />
 
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginVertical="10dp"
             android:text="Personal Detail"
-            android:textColor="#d9112c"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:textColor="#d9112c" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -51,11 +49,11 @@
             android:layout_marginTop="20dp">
 
             <EditText
-                android:layout_marginTop="10dp"
                 android:id="@+id/etxtFname"
-                android:hint="Full Name"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="Full Name" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -65,11 +63,11 @@
             android:layout_marginTop="20dp">
 
             <EditText
-                android:layout_marginTop="10dp"
                 android:id="@+id/etxtUsername"
-                android:hint="Username"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="Username" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -79,11 +77,11 @@
             android:layout_marginTop="20dp">
 
             <EditText
-                android:layout_marginTop="10dp"
                 android:id="@+id/etxtEmail"
-                android:hint="Email Address"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="Email Address" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -93,20 +91,20 @@
             android:layout_marginTop="20dp">
 
             <EditText
-                android:layout_marginTop="10dp"
                 android:id="@+id/etxtPhone"
-                android:hint="Phone Number"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="Phone Number" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginVertical="10dp"
             android:text="Address"
-            android:textColor="#d9112c"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:textColor="#d9112c" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -114,11 +112,11 @@
             android:layout_marginTop="20dp">
 
             <EditText
-                android:layout_marginTop="10dp"
                 android:id="@+id/etxtStreet"
-                android:hint="Street Address"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="Street Address" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -128,11 +126,11 @@
             android:layout_marginTop="20dp">
 
             <EditText
-                android:layout_marginTop="10dp"
                 android:id="@+id/etxtCity"
-                android:hint="City"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="City" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -142,11 +140,11 @@
             android:layout_marginTop="20dp">
 
             <EditText
-                android:layout_marginTop="10dp"
                 android:id="@+id/etxtState"
-                android:hint="State"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="State" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -156,23 +154,23 @@
             android:layout_marginTop="20dp">
 
             <EditText
-                android:layout_marginTop="10dp"
                 android:id="@+id/etxtZip"
-                android:hint="Zip Code"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="Zip Code" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
 
         <Button
-            android:layout_marginVertical="10dp"
             android:id="@+id/btnUpdate"
-            android:text="Update"
-            android:textColor="@color/white"
-            android:background="@drawable/custom_button"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:background="@drawable/custom_button"
+            android:text="Update"
+            android:textColor="@color/white" />
 
     </LinearLayout>
 

@@ -60,19 +60,25 @@ class SingleProductActivity : AppCompatActivity() {
 
             val cart = Cart(quantity = quantity)
 
-            CoroutineScope(Dispatchers.IO).launch{
-                try{
-                    val cartRepository = CartRepository()
-                    val response = cartRepository.addtoCart(product._id!!,cart)
-                    if(response.success == true){
-                        withContext(Main){
-                            Toast.makeText(this@SingleProductActivity, "Added", Toast.LENGTH_SHORT).show()
+            if(ServiceBuilder.accountType=="Buyer") {
+
+                CoroutineScope(Dispatchers.IO).launch {
+                    try {
+                        val cartRepository = CartRepository()
+                        val response = cartRepository.addtoCart(product._id!!, cart)
+                        if (response.success == true) {
+                            withContext(Main) {
+                                Toast.makeText(this@SingleProductActivity, "Added", Toast.LENGTH_SHORT).show()
+                            }
                         }
+
+                    } catch (ex: Exception) {
+
                     }
-
-                }catch (ex: Exception){
-
                 }
+            }
+            else{
+                Toast.makeText(this@SingleProductActivity, "Seller can't add product to Cart", Toast.LENGTH_SHORT).show()
             }
         }
     }

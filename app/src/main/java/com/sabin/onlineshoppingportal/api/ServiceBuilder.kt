@@ -14,6 +14,7 @@ object ServiceBuilder {
 
 
     var token: String? = null
+    var accountType: String? = null
 
     private val okHttp = OkHttpClient.Builder()
     private val retrofitBuilder = Retrofit.Builder()

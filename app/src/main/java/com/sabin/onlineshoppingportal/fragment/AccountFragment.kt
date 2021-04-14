@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.sabin.onlineshoppingportal.OrderActivity
+import com.sabin.onlineshoppingportal.ProductListActivity
 import com.sabin.onlineshoppingportal.R
 import com.sabin.onlineshoppingportal.UpdateProfileActivity
 import com.sabin.onlineshoppingportal.api.ServiceBuilder
@@ -29,6 +30,7 @@ class AccountFragment : Fragment() {
     private lateinit var imgProfile : ImageView
     private lateinit var btnEdit : Button
     private lateinit var btnOrder : Button
+    private lateinit var btnProduct : Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,6 +47,7 @@ class AccountFragment : Fragment() {
         imgProfile = view.findViewById(R.id.imgProfile)
         btnEdit = view.findViewById(R.id.btnEdit)
         btnOrder = view.findViewById(R.id.btnOrder)
+        btnProduct = view.findViewById(R.id.btnProduct)
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -81,6 +84,14 @@ class AccountFragment : Fragment() {
         btnOrder.setOnClickListener {
             val intent = Intent(activity, OrderActivity::class.java)
             startActivity(intent)
+        }
+
+        if(ServiceBuilder.accountType=="Seller"){
+            btnProduct.visibility=View.VISIBLE
+            btnProduct.setOnClickListener {
+                val intent = Intent(activity, ProductListActivity::class.java)
+                startActivity(intent)
+            }
         }
 
         return view

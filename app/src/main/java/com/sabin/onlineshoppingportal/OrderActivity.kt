@@ -63,45 +63,5 @@ class OrderActivity : AppCompatActivity() {
 
             }
         }
-
-//        CoroutineScope(Dispatchers.IO).launch {
-//            withContext(Dispatchers.Main) {
-////                Toast.makeText(this@OrderActivity, at, Toast.LENGTH_SHORT)
-////                        .show()
-//            }
-//            try {
-////                if (at != "Seller") {
-////                    withContext(Dispatchers.Main) {
-////                        Toast.makeText(this@OrderActivity, "You are Seller", Toast.LENGTH_SHORT)
-////                                .show()
-////                                }
-////                }
-////                if(at=="Buyer"){
-////                    val orderRepository = OrderRepository()
-////                    val response = orderRepository.getOrder()
-////                    withContext(Dispatchers.Main) {
-////                        Toast.makeText(this@OrderActivity, at.toString(), Toast.LENGTH_SHORT)
-////                                .show()
-////                    }
-////                    if (response.success == true) {
-////                        lstOrder = response.data!!
-////                        withContext(Dispatchers.Main) {
-////                            topRecycler.adapter = OrderAdapter(lstOrder, this@OrderActivity!!)
-////                            topRecycler.layoutManager = LinearLayoutManager(this@OrderActivity)
-////                        }
-////                    }
-////                }
-//                } catch (ex: Exception) {
-//                    withContext(Dispatchers.Main) {
-//                        Log.d("Error", ex.localizedMessage)
-//                        Toast.makeText(
-//                                this@OrderActivity,
-//                                ex.localizedMessage,
-//                                Toast.LENGTH_SHORT
-//                        ).show()
-//                    }
-//                }
-//            }
-//
         }
     }

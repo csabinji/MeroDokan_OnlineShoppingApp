@@ -11,6 +11,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.sabin.onlineshoppingportal.adapter.OrderAdapter
 import com.sabin.onlineshoppingportal.adapter.ProductAdapter
 import com.sabin.onlineshoppingportal.adapter.ViewPageAdapter
 import com.sabin.onlineshoppingportal.api.ServiceBuilder
@@ -18,6 +19,7 @@ import com.sabin.onlineshoppingportal.fragment.AccountFragment
 import com.sabin.onlineshoppingportal.fragment.AddProductFragment
 import com.sabin.onlineshoppingportal.fragment.CartFragment
 import com.sabin.onlineshoppingportal.fragment.HomeFragment
+import com.sabin.onlineshoppingportal.repository.OrderRepository
 import com.sabin.onlineshoppingportal.repository.UserRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -37,8 +39,6 @@ class DashboardActivity : AppCompatActivity() {
     private lateinit var tabs : TabLayout
     private lateinit var viewPager : ViewPager2
 
-    private var at = ""
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
@@ -50,7 +50,7 @@ class DashboardActivity : AppCompatActivity() {
         tabs = findViewById(R.id.tabs)
         viewPager = findViewById(R.id.viewPager)
 
-        populateList()
+        populateBList()
 
         val adapter = ViewPageAdapter(lstFragments,supportFragmentManager,lifecycle)
         viewPager.adapter = adapter
@@ -67,33 +67,44 @@ class DashboardActivity : AppCompatActivity() {
                 tab.setIcon(R.drawable.account)
             }
         }.attach()
+
     }
-    private fun populateList(){
+    private fun populateBList(){
 
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val userRepository = UserRepository()
-                val response = userRepository.getSingleUser()
-                if(response.success == true){
-                    withContext(Dispatchers.Main) {
-                        at = "${response.data?.accountType}"
-                    }
-                    }
+        if(ServiceBuilder.accountType=="Seller") {
+            lstTitle = ArrayList<String>()
+            lstTitle.add("Home")
+            lstTitle.add("Add Product")
+            lstTitle.add("Account")
 
-            } catch (ex: Exception) {
-
-            }
+            lstFragments = ArrayList<Fragment>()
+            lstFragments.add(HomeFragment())
+            lstFragments.add(AddProductFragment())
+            lstFragments.add(AccountFragment())
         }
+
+        else{
+            lstTitle = ArrayList<String>()
+            lstTitle.add("Home")
+            lstTitle.add("Cart")
+            lstTitle.add("Account")
+
+            lstFragments = ArrayList<Fragment>()
+            lstFragments.add(HomeFragment())
+            lstFragments.add(CartFragment())
+            lstFragments.add(AccountFragment())
+        }
+    }
+
+    private fun populateSList(){
 
         lstTitle = ArrayList<String>()
         lstTitle.add("Home")
-        lstTitle.add("Cart")
         lstTitle.add("Add Product")
         lstTitle.add("Account")
 
         lstFragments = ArrayList<Fragment>()
         lstFragments.add(HomeFragment())
-        lstFragments.add(CartFragment())
         lstFragments.add(AddProductFragment())
         lstFragments.add(AccountFragment())
 
