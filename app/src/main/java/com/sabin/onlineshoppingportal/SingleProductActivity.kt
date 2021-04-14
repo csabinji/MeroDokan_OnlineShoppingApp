@@ -44,7 +44,7 @@ class SingleProductActivity : AppCompatActivity() {
         val product = intent.getParcelableExtra<Product>("product")!!
         txtPname.setText(product.name)
         txtCategory.setText(product.category)
-        txtPrice.setText(product.price)
+        txtPrice.setText("Rs." + product.price)
         txtDes.setText(product.dec)
         txtQty.setText("1")
 

@@ -33,6 +33,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="16dp"
             android:text="Product Name"
+            android:textColor="#000"
             android:textSize="20sp"
             android:layout_marginLeft="20dp" />
 
@@ -52,9 +53,16 @@
             android:layout_height="27dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="24dp"
-            android:text="Seller"
+            android:text="Quantity"
             android:textSize="20sp"
             android:layout_marginLeft="20dp" />
+
+        <Button
+            android:id="@+id/btnOrder"
+            android:text="Order"
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 
@@ -62,15 +70,6 @@
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
-
-        <ImageView
-            android:id="@+id/ImgOrder"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="24dp"
-            android:src="@drawable/buy"
-            android:layout_marginLeft="20dp" />
 
         <ImageView
             android:id="@+id/imgDelete"

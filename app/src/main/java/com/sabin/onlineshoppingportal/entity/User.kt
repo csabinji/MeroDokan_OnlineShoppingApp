@@ -7,5 +7,10 @@ data class User (
         var email : String? = null,
         var accountType : String? = null,
         var image : String? = null,
-        var password : String? = null
+        var password : String? = null,
+        var phone : String? = null,
+        var city : String? = null,
+        var street : String? = null,
+        var state : String? = null,
+        var zip : String? = null,
 )

@@ -5,6 +5,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -34,14 +35,14 @@ class CartAdapter(
                 val tvPrice : TextView
                 val tvAddedBy : TextView
                 val imgDelete : ImageView
-                val imgOrder : ImageView
+                val btnOrder : Button
                 init {
                     imgProduct = view.findViewById(R.id.imgProduct)
                     tvName = view.findViewById(R.id.tvName)
                     tvPrice = view.findViewById(R.id.tvPrice)
                     tvAddedBy = view.findViewById(R.id.tvAddedby)
                     imgDelete = view.findViewById(R.id.imgDelete)
-                    imgOrder = view.findViewById(R.id.ImgOrder)
+                    btnOrder = view.findViewById(R.id.btnOrder)
                 }
             }
 
@@ -84,7 +85,7 @@ class CartAdapter(
         }
         holder.tvAddedBy.text = cart.quantity.toString()
 
-        holder.imgProduct.setOnClickListener {
+        holder.btnOrder.setOnClickListener {
             val quantity = cart.quantity.toString()
 
             val order = Order(quantity = quantity)
@@ -93,12 +94,20 @@ class CartAdapter(
                 try{
                     val orderRepository = OrderRepository()
                     val response = orderRepository.addtoOrder(cart._id!!,order)
-                    withContext(Main){
-                        Toast.makeText(context, "Clicked", Toast.LENGTH_SHORT).show()
-                    }
                     if(response.success==true){
                         withContext(Main){
                             Toast.makeText(context, "Order Placed", Toast.LENGTH_SHORT).show()
+                            val cartRepository = CartRepository()
+                            val response = cartRepository.deleteCart(cart._id!!)
+                            if (response.success == true) {
+                                withContext(Dispatchers.Main) {
+
+                                }
+                            }
+                            withContext(Main) {
+                                lstCart.remove(cart)
+                                notifyDataSetChanged()
+                            }
                         }
                     }
                 }catch (ex: Exception){

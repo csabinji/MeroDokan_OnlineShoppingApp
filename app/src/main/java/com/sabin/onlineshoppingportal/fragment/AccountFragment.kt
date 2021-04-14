@@ -61,7 +61,7 @@ class AccountFragment : Fragment() {
                         txtusername.setText("${response.data?.username}")
                         txtFname.setText("${response.data?.fullname}")
                         txtemail.setText("${response.data?.email}")
-                        txtType.setText("${response.data?.accountType}")
+                        txtType.setText("${response.data?.phone}")
 
                         if (!user.image.equals("")) {
                             Glide.with(context!!)
