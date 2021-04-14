@@ -25,6 +25,8 @@ class UpdateProfileActivity : AppCompatActivity() {
     private lateinit var imgProfile : ImageView
     private lateinit var btnUpdate : Button
 
+    private var uid : String = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_update_profile)
@@ -47,6 +49,7 @@ class UpdateProfileActivity : AppCompatActivity() {
                         etxtFname.setText("${response.data?.fullname}")
                         etxtUsername.setText("${response.data?.username}")
                         etxtEmail.setText("${response.data?.email}")
+                        uid = response.data!!._id.toString()
 
                         if (!user.image.equals("")) {
                             Glide.with(this@UpdateProfileActivity)
@@ -66,22 +69,21 @@ class UpdateProfileActivity : AppCompatActivity() {
             val username = etxtUsername.text.toString()
             val email = etxtEmail.text.toString()
 
-            val user = User(fullname = fullname, username = username, email = email)
+            val user = User(_id = uid, fullname = fullname, username = username, email = email)
 
             CoroutineScope(Dispatchers.IO).launch {
                 try{
                     val userRepository = UserRepository()
                     val response = userRepository.updateUser(user)
-                    withContext(Dispatchers.Main){
-                        Toast.makeText(this@UpdateProfileActivity, "clicked", Toast.LENGTH_SHORT).show()
-                    }
                     if (response.success==true){
                         withContext(Dispatchers.Main){
                             Toast.makeText(this@UpdateProfileActivity, response.message.toString(), Toast.LENGTH_SHORT).show()
                         }
                     }
                 }catch (ex: Exception){
-
+                    withContext(Dispatchers.Main){
+                        Toast.makeText(this@UpdateProfileActivity, ex.toString(), Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }

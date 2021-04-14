@@ -2,15 +2,21 @@ package com.sabin.onlineshoppingportal.adapter
 
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.sabin.onlineshoppingportal.R
+import com.sabin.onlineshoppingportal.SingleProductActivity
+import com.sabin.onlineshoppingportal.UpdateProductActivity
+import com.sabin.onlineshoppingportal.UpdateProfileActivity
 import com.sabin.onlineshoppingportal.api.ServiceBuilder
 import com.sabin.onlineshoppingportal.entity.Order
 import com.sabin.onlineshoppingportal.entity.Product
@@ -31,11 +37,13 @@ class ProductListAdapter (
         val imgDelete : ImageView
         val tvName : TextView
         val tvPrice : TextView
+        val btnUpdate : Button
         init {
             imgProduct = view.findViewById(R.id.imgProduct)
             tvName = view.findViewById(R.id.tvName)
             tvPrice = view.findViewById(R.id.tvPrice)
             imgDelete = view.findViewById(R.id.imgDelete)
+            btnUpdate = view.findViewById(R.id.btnUpdate)
         }
     }
 
@@ -56,6 +64,12 @@ class ProductListAdapter (
                 .load(imagePath)
                 .fitCenter()
                 .into(holder.imgProduct)
+        }
+
+        holder.btnUpdate.setOnClickListener {
+            val intent = Intent(context, UpdateProductActivity::class.java)
+                .putExtra("product", product)
+            startActivity(context,intent,null)
         }
 
         holder.imgDelete.setOnClickListener{

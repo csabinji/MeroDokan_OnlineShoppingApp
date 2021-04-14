@@ -1,5 +1,6 @@
 package com.sabin.onlineshoppingportal.api
 
+import com.sabin.onlineshoppingportal.adapter.User
 import com.sabin.onlineshoppingportal.entity.Product
 import com.sabin.onlineshoppingportal.response.*
 import okhttp3.MultipartBody
@@ -47,4 +48,11 @@ interface ProductAPI {
         @Header("Authorization") token: String,
         @Path("id") id:String,
     ) : Response<DeleteProductResponse>
+
+    //Update
+    @PUT("/product/update")
+    suspend fun UpdateProduct(
+        @Header("Authorization") token : String,
+        @Body product: Product
+    ) : Response<UpdateProductResponse>
 }

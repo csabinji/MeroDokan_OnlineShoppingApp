@@ -84,7 +84,7 @@ class CartAdapter(
         }
         holder.tvAddedBy.text = cart.quantity.toString()
 
-        holder.imgOrder.setOnClickListener {
+        holder.imgProduct.setOnClickListener {
             val quantity = cart.quantity.toString()
 
             val order = Order(quantity = quantity)
@@ -102,11 +102,10 @@ class CartAdapter(
                         }
                     }
                 }catch (ex: Exception){
-
+                    Toast.makeText(context, ex.toString(), Toast.LENGTH_SHORT).show()
                 }
             }
         }
-
         holder.imgDelete.setOnClickListener{
             val builder = AlertDialog.Builder(context)
             builder.setTitle("Delete Product")
@@ -120,11 +119,11 @@ class CartAdapter(
                         if (response.success == true) {
                             withContext(Dispatchers.Main) {
                                 Toast.makeText(
-                                        context,
-                                        "Product Deleted",
-                                        Toast.LENGTH_SHORT
+                                    context,
+                                    "Product Deleted",
+                                    Toast.LENGTH_SHORT
                                 )
-                                        .show()
+                                    .show()
                             }
                         }
                         withContext(Main) {

@@ -5,4 +5,5 @@ data class Order (
         var quantity : String? = null,
         var product : String? = null,
         var bname : String? = null,
+        var owner : String? = null,
         )

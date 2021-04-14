@@ -1,5 +1,6 @@
 package com.sabin.onlineshoppingportal.repository
 
+import com.sabin.onlineshoppingportal.adapter.User
 import com.sabin.onlineshoppingportal.api.MyApiRequest
 import com.sabin.onlineshoppingportal.api.ProductAPI
 import com.sabin.onlineshoppingportal.api.ServiceBuilder
@@ -57,6 +58,14 @@ class ProductRepository :
             productAPI.deleteProduct(
                 ServiceBuilder.token!!, product
             )
+        }
+    }
+
+    // Update Product
+
+    suspend fun updateProduct(product: Product) : UpdateProductResponse {
+        return apiRequest {
+            productAPI.UpdateProduct(ServiceBuilder.token!!,product)
         }
     }
 }

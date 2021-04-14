@@ -39,8 +39,8 @@ class ProductListActivity : AppCompatActivity() {
                 }
             } catch (ex : Exception){
 
-
-            }            }
+            }
+        }
 
     }
 }

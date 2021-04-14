@@ -55,14 +55,14 @@ class OrderAdapter (
             try {
                 val productRepository = ProductRepository()
                 val response = productRepository.getProduct(order.product!!)
-                if(response.success==true){
+                if(response.success==true) {
                     val product = response.data!!
-                    withContext(Dispatchers.Main){
+                    withContext(Dispatchers.Main) {
                         holder.tvName.text = product?.name
                         holder.tvPrice.text = "Rs." + product?.price
 
                         val imagePath = ServiceBuilder.loadImagePath() + product.image
-                        if(!product.image.equals("upload.jpg")) {
+                        if (!product.image.equals("upload.jpg")) {
                             Glide.with(context)
                                 .load(imagePath)
                                 .fitCenter()
@@ -70,16 +70,31 @@ class OrderAdapter (
                         }
                     }
 
-                    val userRepository = UserRepository()
-                    val response = userRepository.getBuyer(order.bname!!)
-                    if(response.success == true){
-                        val user = response.data!!
-                        withContext(Dispatchers.Main){
-                            holder.tvAddedBy.text = user?.username
+                    if (ServiceBuilder.accountType == "Seller") {
+                        val userRepository = UserRepository()
+                        val response = userRepository.getBuyer(order.bname!!)
+                        if (response.success == true) {
+                            val user = response.data!!
+                            withContext(Dispatchers.Main) {
+                                holder.tvAddedBy.text = "Buyer: " + user?.username
+                            }
+                        }
+                        withContext(Dispatchers.Main) {
+                            notifyDataSetChanged()
                         }
                     }
-                    withContext(Dispatchers.Main) {
-                        notifyDataSetChanged()
+                    if (ServiceBuilder.accountType == "Buyer"){
+                        val userRepository = UserRepository()
+                        val response = userRepository.getBuyer(order.owner!!)
+                        if (response.success == true) {
+                            val user = response.data!!
+                            withContext(Dispatchers.Main) {
+                                holder.tvAddedBy.text = "Owner: " + user?.username
+                            }
+                        }
+                        withContext(Dispatchers.Main) {
+                            notifyDataSetChanged()
+                        }
                     }
                 }
 
