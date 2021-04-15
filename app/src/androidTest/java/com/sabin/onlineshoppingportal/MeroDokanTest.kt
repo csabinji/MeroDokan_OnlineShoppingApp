@@ -1,14 +1,7 @@
 package com.sabin.onlineshoppingportal
 
-import androidx.test.espresso.Espresso
-import androidx.test.espresso.action.ViewActions
-import androidx.test.espresso.assertion.ViewAssertions
-import androidx.test.espresso.matcher.ViewMatchers
-import androidx.test.ext.junit.rules.ActivityScenarioRule
-import androidx.test.filters.LargeTest
 import com.sabin.onlineshoppingportal.api.ServiceBuilder
 import com.sabin.onlineshoppingportal.entity.Cart
-import com.sabin.onlineshoppingportal.entity.Order
 import com.sabin.onlineshoppingportal.entity.Product
 import com.sabin.onlineshoppingportal.repository.CartRepository
 import com.sabin.onlineshoppingportal.repository.OrderRepository
@@ -16,10 +9,7 @@ import com.sabin.onlineshoppingportal.repository.ProductRepository
 import com.sabin.onlineshoppingportal.repository.UserRepository
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert
-import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
 
 class MeroDokanTest {
     private lateinit var userRepository: UserRepository
