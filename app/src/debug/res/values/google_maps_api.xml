@@ -1,0 +1,24 @@
+<resources>
+    <!--
+    TODO: Before you run your application, you need a Google Maps API key.
+
+    To get one, follow this link, follow the directions and press "Create" at the end:
+
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=04:8A:69:EA:E3:3B:33:02:BE:49:D3:44:E4:79:1B:BD:F7:E0:79:32%3Bcom.sabin.onlineshoppingportal
+
+    You can also add your credentials to an existing key, using these values:
+
+    Package name:
+    com.sabin.onlineshoppingportal
+
+    SHA-1 certificate fingerprint:
+    04:8A:69:EA:E3:3B:33:02:BE:49:D3:44:E4:79:1B:BD:F7:E0:79:32
+
+    Alternatively, follow the directions here:
+    https://developers.google.com/maps/documentation/android/start#get-key
+
+    Once you have your key (it starts with "AIza"), replace the "google_maps_key"
+    string in this file.
+    -->
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyCSDxv_4HXmwATsFYPt_J1Pdek-sZrL_oU</string>
+</resources>

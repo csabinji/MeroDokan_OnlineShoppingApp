@@ -1,13 +1,17 @@
 package com.sabin.onlineshoppingportal.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.sabin.onlineshoppingportal.GoogleMapActivity
 import com.sabin.onlineshoppingportal.R
+import com.sabin.onlineshoppingportal.UpdateProfileActivity
 import com.sabin.onlineshoppingportal.adapter.ProductAdapter
 import com.sabin.onlineshoppingportal.db.ProductDB
 import com.sabin.onlineshoppingportal.entity.Product
@@ -21,12 +25,19 @@ class HomeFragment : Fragment() {
 
     private lateinit var topRecycler : RecyclerView
     private var products = mutableListOf<Product>()
+    private lateinit var imgIcon : ImageView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
         topRecycler = view.findViewById(R.id.topRecycler)
 
+        imgIcon = view.findViewById(R.id.imgIcon)
+
+        imgIcon.setOnClickListener {
+            val intent = Intent(activity, GoogleMapActivity::class.java)
+            startActivity(intent)
+        }
 
         runBlocking {
             deleteProducts().collect()

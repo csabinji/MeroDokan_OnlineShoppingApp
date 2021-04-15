@@ -14,6 +14,7 @@
         android:layout_height="50dp">
 
         <ImageView
+            android:id="@+id/imgIcon"
             android:src="@drawable/icon"
             android:layout_width="80dp"
             android:layout_height="match_parent"/>
