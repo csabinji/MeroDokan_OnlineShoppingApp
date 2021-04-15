@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
@@ -14,8 +15,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import com.sabin.onlineshoppingportal.R
 import com.sabin.onlineshoppingportal.entity.Product
+import com.sabin.onlineshoppingportal.notification.NotificationChannels
 import com.sabin.onlineshoppingportal.repository.ProductRepository
 import com.sabin.onlineshoppingportal.repository.UserRepository
 import kotlinx.coroutines.CoroutineScope
@@ -100,22 +104,14 @@ class AddProductFragment : Fragment() {
                 val productRepository = ProductRepository()
                 val response = productRepository.addProduct(product)
                 if (response.success == true) {
+                    showHighPriorityNotification()
                     //ProductDB.getInstance(context!!).getProductDAO().insertProduct(product)
                     if(imageUrl != null){
-                        withContext(Dispatchers.Main) {
-                            Toast.makeText(
-                                    context, imageUrl.toString(),
-                                    Toast.LENGTH_SHORT
-                            ).show()
-                        }
 
                         uploadImage(response.data!!._id!!)
                     }
                     withContext(Dispatchers.Main) {
-                        Toast.makeText(
-                            context, response.message.toString(),
-                            Toast.LENGTH_SHORT
-                        ).show()
+
                     }
                 }
             } catch (ex: Exception) {
@@ -140,8 +136,7 @@ class AddProductFragment : Fragment() {
                     val response = productRepository.uploadImage(productId, body)
                     if (response.success == true) {
                         withContext(Dispatchers.Main) {
-                            Toast.makeText(getActivity(), response.message.toString(), Toast.LENGTH_SHORT)
-                                .show()
+
                         }
                     }
                     else{
@@ -246,5 +241,21 @@ class AddProductFragment : Fragment() {
             e.printStackTrace()
             file // it will return null
         }
+    }
+    private fun showHighPriorityNotification() {
+
+        val notificationManager = NotificationManagerCompat.from(context!!)
+
+        val notificationChannels = NotificationChannels(context!!)
+        notificationChannels.createNotificationChannels()
+
+        val notification = NotificationCompat.Builder(context!!, notificationChannels.CHANNEL_1)
+            .setSmallIcon(R.drawable.noti)
+            .setContentTitle("Product Added")
+            .setContentText("New Product is added in $selectedProduct category.")
+            .setColor(Color.BLUE)
+            .build()
+
+        notificationManager.notify(1,notification)
     }
 }
