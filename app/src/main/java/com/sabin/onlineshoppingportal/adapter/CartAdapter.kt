@@ -2,6 +2,7 @@ package com.sabin.onlineshoppingportal.adapter
 
 import android.app.AlertDialog
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,12 +10,15 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.sabin.onlineshoppingportal.R
 import com.sabin.onlineshoppingportal.api.ServiceBuilder
 import com.sabin.onlineshoppingportal.entity.Cart
 import com.sabin.onlineshoppingportal.entity.Order
+import com.sabin.onlineshoppingportal.notification.NotificationChannels
 import com.sabin.onlineshoppingportal.repository.CartRepository
 import com.sabin.onlineshoppingportal.repository.OrderRepository
 import com.sabin.onlineshoppingportal.repository.ProductRepository
@@ -95,6 +99,7 @@ class CartAdapter(
                     val orderRepository = OrderRepository()
                     val response = orderRepository.addtoOrder(cart._id!!,order)
                     if(response.success==true){
+                        showHighPriorityNotification()
                         withContext(Main){
                             Toast.makeText(context, "Order Placed", Toast.LENGTH_SHORT).show()
                             val cartRepository = CartRepository()
@@ -155,6 +160,23 @@ class CartAdapter(
             alertDialog.show()
 
         }
+    }
+
+    private fun showHighPriorityNotification() {
+
+        val notificationManager = NotificationManagerCompat.from(context!!)
+
+        val notificationChannels = NotificationChannels(context!!)
+        notificationChannels.createNotificationChannels()
+
+        val notification = NotificationCompat.Builder(context!!, notificationChannels.CHANNEL_1)
+            .setSmallIcon(R.drawable.noti)
+            .setContentTitle("Order Placed.")
+            .setContentText("New product is added in the order list.")
+            .setColor(Color.BLUE)
+            .build()
+
+        notificationManager.notify(1,notification)
     }
 
     override fun getItemCount(): Int {

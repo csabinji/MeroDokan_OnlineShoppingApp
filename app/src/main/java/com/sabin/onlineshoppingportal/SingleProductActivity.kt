@@ -96,7 +96,7 @@ class SingleProductActivity : AppCompatActivity() {
         val notification = NotificationCompat.Builder(this, notificationChannels.CHANNEL_2)
             .setSmallIcon(R.drawable.noti)
             .setContentTitle("Product Added to Cart")
-            .setContentText("$txtPname is added to Cart.")
+            .setContentText("Product is added to Cart.")
             .setColor(Color.BLUE)
             .build()
 
