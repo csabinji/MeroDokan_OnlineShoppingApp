@@ -55,12 +55,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
         <TextView
-            android:id="@+id/txtQty"
-            android:text="Quantity"
+            android:text="Quentity  "
+            android:layout_marginVertical="10dp"
+            android:textSize="18dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:id="@+id/etxtQty"
+            android:text="1"
+            android:inputType="number"
             android:layout_marginVertical="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
 
         <Button
             android:text="Add to Cart"
