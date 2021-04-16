@@ -1,6 +1,5 @@
 package com.sabin.onlineshoppingportal
 
-import androidx.test.espresso.Espresso.closeSoftKeyboard
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.typeText
@@ -16,26 +15,36 @@ import org.junit.runners.JUnit4
 
 @LargeTest
 @RunWith(JUnit4::class)
-class LoginTest {
+class RegisterTest {
     @get:Rule
-    val testRule = ActivityScenarioRule(LoginActivity::class.java)
+    val testRule = ActivityScenarioRule(SignUpActivity::class.java)
 
     @Test
-    fun checkLogin(){
+    fun checkRegister(){
+        onView(withId(R.id.etxtFname))
+            .perform(typeText("Unish Bhattarai"))
+
         onView(withId(R.id.etxtUser))
-                .perform(typeText("sabin"))
+            .perform(typeText("unish"))
+
+        onView(withId(R.id.etxtEmail))
+            .perform(typeText("unish@gmail.com"))
+
+        onView(withId(R.id.spnUser))
+            .perform()
 
         onView(withId(R.id.etxtPass))
-                .perform(typeText("sabin"))
+            .perform(typeText("unish"))
 
-        closeSoftKeyboard()
+        onView(withId(R.id.etxtRepass))
+            .perform(typeText("unish"))
 
-        onView(withId(R.id.btnLogin))
-                .perform(click())
+        onView(withId(R.id.btnSignup))
+            .perform(click())
 
         Thread.sleep(2000)
 
-        onView(withId(R.id.topRecycler))
-                .check(matches(isDisplayed()))
+        onView(withId(R.id.etxtUsername))
+            .check(matches(isDisplayed()))
     }
 }
