@@ -1,5 +1,7 @@
 package com.sabin.onlineshoppingportal
 
+import androidx.test.espresso.Espresso
+import androidx.test.espresso.Espresso.closeSoftKeyboard
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.typeText
@@ -39,12 +41,14 @@ class RegisterTest {
         onView(withId(R.id.etxtRepass))
             .perform(typeText("unish"))
 
+        closeSoftKeyboard()
+
         onView(withId(R.id.btnSignup))
             .perform(click())
 
         Thread.sleep(2000)
 
-        onView(withId(R.id.etxtUsername))
+        onView(withId(R.id.btnLogin))
             .check(matches(isDisplayed()))
     }
 }

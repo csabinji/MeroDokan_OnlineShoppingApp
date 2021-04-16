@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/box_inset_layout_padding"
+    android:orientation="vertical"
+    android:id="@+id/linearlayout"
+    tools:context=".LoginActivity"
+    tools:deviceIds="wear">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:src="@drawable/icon"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"/>
+
+    </LinearLayout>
+
+   <LinearLayout
+       android:orientation="vertical"
+       android:layout_gravity="center"
+       android:layout_marginHorizontal="25dp"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+
+       <EditText
+           android:id="@+id/etxtUsername"
+           android:layout_width="match_parent"
+           android:layout_height="50dp"
+           android:hint="Username" />
+
+       <EditText
+           android:id="@+id/etxtPassword"
+           android:hint="Password"
+           android:inputType="textPassword"
+           android:layout_width="match_parent"
+           android:layout_height="50dp"/>
+
+       <Button
+           android:text="Login"
+           android:id="@+id/btnLogin"
+           android:layout_marginTop="10dp"
+           android:layout_gravity="center"
+           android:textColor="@color/white"
+           android:background="@drawable/custom_button"
+           android:layout_width="wrap_content"
+           android:layout_height="40dp"/>
+
+   </LinearLayout>
+
+</LinearLayout>
