@@ -1,4 +1,4 @@
-package com.sabin.onlineshoppingportal.api
+package com.sabin.ospwearos.api
 
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -28,10 +28,5 @@ object ServiceBuilder {
     //Generic function
     fun <T> buildService(serviceTypes: Class<T>): T {
         return retrofit.create(serviceTypes)
-    }
-    // Load Image
-    fun loadImagePath(): String {
-        val arr = BASE_URL.split("/").toTypedArray()
-        return arr[0] + "/" + arr[1] + arr[2] + "/uploads/"
     }
 }

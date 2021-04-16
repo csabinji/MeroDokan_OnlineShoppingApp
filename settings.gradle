@@ -1,2 +1,3 @@
+include ':OSPWearOS'
 include ':app'
 rootProject.name = "Online Shopping Portal"

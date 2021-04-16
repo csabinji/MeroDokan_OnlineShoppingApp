@@ -41,7 +41,7 @@ class UserRepository
         }
     }
 
-    // Single Product
+    // Single User
 
     suspend fun getBuyer(id:String): UserResponse {
         return apiRequest {
