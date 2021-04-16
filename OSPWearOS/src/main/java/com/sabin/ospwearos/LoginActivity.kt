@@ -3,12 +3,10 @@ package com.sabin.ospwearos
 import android.content.Intent
 import android.os.Bundle
 import android.support.wearable.activity.WearableActivity
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.Toast
-import com.google.android.material.snackbar.Snackbar
 import com.sabin.ospwearos.api.ServiceBuilder
 import com.sabin.ospwearos.repository.UserRepository
 import kotlinx.coroutines.CoroutineScope
@@ -44,11 +42,12 @@ class LoginActivity : WearableActivity() {
     private fun userLogin(){
         val username = etxtUsername.text.toString()
         val password = etxtPassword.text.toString()
+
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val repository = UserRepository()
                 val response = repository.checkUser(username,password)
-                if(response.success == true){
+                if(response.success == true) {
                     ServiceBuilder.token = "Bearer " + response.token
                     ServiceBuilder.accountType = response.accountType
                     startActivity(
@@ -58,19 +57,6 @@ class LoginActivity : WearableActivity() {
                         )
                     )
                     finish()
-                }else {
-                    withContext(Dispatchers.Main) {
-                        val snack =
-                            Snackbar.make(
-                                linearlayout,
-                                "Invalid credentials",
-                                Snackbar.LENGTH_LONG
-                            )
-                        snack.setAction("OK", View.OnClickListener {
-                            snack.dismiss()
-                        })
-                        snack.show()
-                    }
                 }
             }catch (ex : Exception){
                 withContext(Dispatchers.Main) {

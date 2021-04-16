@@ -1,6 +1,5 @@
 package com.sabin.onlineshoppingportal.api
 
-import androidx.room.Update
 import com.sabin.onlineshoppingportal.adapter.User
 import com.sabin.onlineshoppingportal.response.*
 import retrofit2.Response
