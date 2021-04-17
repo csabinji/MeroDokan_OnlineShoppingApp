@@ -1,8 +1,13 @@
 package com.sabin.onlineshoppingportal
 
 import android.content.pm.PackageManager
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
@@ -26,7 +31,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class DashboardActivity : AppCompatActivity() {
+class DashboardActivity : AppCompatActivity(), SensorEventListener {
 
     private val permissions = arrayOf(
             android.Manifest.permission.CAMERA,
@@ -38,6 +43,8 @@ class DashboardActivity : AppCompatActivity() {
     private lateinit var lstFragments : ArrayList<Fragment>
     private lateinit var tabs : TabLayout
     private lateinit var viewPager : ViewPager2
+    private lateinit var sensorManager: SensorManager
+    private var sensor: Sensor? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +56,14 @@ class DashboardActivity : AppCompatActivity() {
 
         tabs = findViewById(R.id.tabs)
         viewPager = findViewById(R.id.viewPager)
+        sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
+
+        if (!checkSensor())
+            return
+        else {
+            sensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY)
+            sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL)
+        }
 
         populateBList()
 
@@ -96,20 +111,6 @@ class DashboardActivity : AppCompatActivity() {
         }
     }
 
-    private fun populateSList(){
-
-        lstTitle = ArrayList<String>()
-        lstTitle.add("Home")
-        lstTitle.add("Add Product")
-        lstTitle.add("Account")
-
-        lstFragments = ArrayList<Fragment>()
-        lstFragments.add(HomeFragment())
-        lstFragments.add(AddProductFragment())
-        lstFragments.add(AccountFragment())
-
-
-    }
     private fun requestPermission() {
         ActivityCompat.requestPermissions(
                 this@DashboardActivity,
@@ -129,5 +130,31 @@ class DashboardActivity : AppCompatActivity() {
             }
         }
         return hasPermission
+    }
+
+    private fun checkSensor(): Boolean {
+        var flag = true
+        if (sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY) == null) {
+            flag = false
+        }
+        return flag
+    }
+
+    override fun onSensorChanged(event: SensorEvent?) {
+        val values = event!!.values[0]
+        val params = this.window.attributes
+
+        if (values < sensor!!.maximumRange) {
+            params.flags = params.flags or WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+            params.screenBrightness = 0f
+            window.attributes = params
+        } else {
+            params.flags = params.flags or WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+            params.screenBrightness = -1f
+            window.attributes = params
+        }
+    }
+
+    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
     }
 }

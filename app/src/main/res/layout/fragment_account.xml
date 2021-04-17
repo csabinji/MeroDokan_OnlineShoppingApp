@@ -5,6 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -195,7 +197,7 @@
 
         <TextView
             android:id="@+id/txtStreet"
-            android:text="Kirat Chowk"
+            android:text=""
             android:textSize="15dp"
             android:layout_marginVertical="5dp"
             android:layout_width="match_parent"
@@ -203,7 +205,7 @@
 
             <TextView
                 android:id="@+id/txtCity"
-                android:text="Damak"
+                android:text=""
                 android:textSize="15dp"
                 android:layout_marginVertical="5dp"
                 android:layout_width="match_parent"
@@ -211,7 +213,7 @@
 
             <TextView
                 android:id="@+id/txtState"
-                android:text="State 1"
+                android:text=""
                 android:textSize="15dp"
                 android:layout_marginVertical="5dp"
                 android:layout_width="match_parent"
@@ -219,7 +221,7 @@
 
             <TextView
                 android:id="@+id/txtZip"
-                android:text="57217"
+                android:text=""
                 android:textSize="15dp"
                 android:layout_marginVertical="5dp"
                 android:layout_width="match_parent"
@@ -298,6 +300,7 @@
             android:layout_height="wrap_content"/>
 
     </LinearLayout>
+
 
 </LinearLayout>
 </ScrollView>

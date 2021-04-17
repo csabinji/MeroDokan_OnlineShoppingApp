@@ -1,5 +1,6 @@
 package com.sabin.onlineshoppingportal.fragment
 
+import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -24,6 +25,10 @@ class AccountFragment : Fragment() {
     private lateinit var txtFname : TextView
     private lateinit var txtemail : TextView
     private lateinit var txtType : TextView
+    private lateinit var txtStreet : TextView
+    private lateinit var txtCity : TextView
+    private lateinit var txtZip : TextView
+    private lateinit var txtState : TextView
     private lateinit var imgProfile : ImageView
     private lateinit var btnEdit : Button
     private lateinit var btnOrder : Button
@@ -42,6 +47,10 @@ class AccountFragment : Fragment() {
         txtFname = view.findViewById(R.id.txtFname)
         txtemail = view.findViewById(R.id.txtemail)
         txtType = view.findViewById(R.id.txtType)
+        txtStreet = view.findViewById(R.id.txtStreet)
+        txtState = view.findViewById(R.id.txtState)
+        txtCity = view.findViewById(R.id.txtCity)
+        txtZip = view.findViewById(R.id.txtZip)
         imgProfile = view.findViewById(R.id.imgProfile)
         btnEdit = view.findViewById(R.id.btnEdit)
         btnOrder = view.findViewById(R.id.btnOrder)
@@ -61,6 +70,10 @@ class AccountFragment : Fragment() {
                         txtFname.setText("${response.data?.fullname}")
                         txtemail.setText("${response.data?.email}")
                         txtType.setText("${response.data?.phone}")
+                        txtStreet.setText("${response.data?.street}")
+                        txtState.setText("${response.data?.state}")
+                        txtCity.setText("${response.data?.city}")
+                        txtZip.setText("${response.data?.zip}")
 
                         if (!user.image.equals("")) {
                             Glide.with(context!!)
@@ -96,6 +109,7 @@ class AccountFragment : Fragment() {
         btnLogout.setOnClickListener {
             ServiceBuilder.token.equals("")
             ServiceBuilder.accountType.equals("")
+            getSharedPref()
             startActivity(
                 Intent(
                context!!,
@@ -104,6 +118,13 @@ class AccountFragment : Fragment() {
             )
         }
 
+
         return view
+    }
+    private fun getSharedPref() {
+        val sharedPref = requireContext().getSharedPreferences("user", MODE_PRIVATE)
+        val editor = sharedPref.edit()
+        editor.clear()
+        editor.apply()
     }
 }

@@ -5,6 +5,7 @@ import com.sabin.onlineshoppingportal.api.MyApiRequest
 import com.sabin.onlineshoppingportal.api.ServiceBuilder
 import com.sabin.onlineshoppingportal.api.UserAPI
 import com.sabin.onlineshoppingportal.response.*
+import okhttp3.MultipartBody
 
 class UserRepository
     : MyApiRequest() {
@@ -46,6 +47,15 @@ class UserRepository
     suspend fun getBuyer(id:String): UserResponse {
         return apiRequest {
             userAPI.getBuyer(ServiceBuilder.token!!, id)
+        }
+    }
+
+    // User Image
+
+    suspend fun uploadUserImage(id: String, body: MultipartBody.Part)
+            : ImageResponse {
+        return apiRequest {
+            userAPI.uploadUserImage(ServiceBuilder.token!!, id, body)
         }
     }
 

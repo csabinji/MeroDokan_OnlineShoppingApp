@@ -2,6 +2,7 @@ package com.sabin.onlineshoppingportal.api
 
 import com.sabin.onlineshoppingportal.adapter.User
 import com.sabin.onlineshoppingportal.response.*
+import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -39,4 +40,14 @@ interface UserAPI {
             @Header("Authorization") token: String,
             @Path("id") id: String
     ) : Response<UserResponse>
+
+    @Multipart
+    @PUT("user/{id}/image")
+    suspend fun uploadUserImage(
+            @Header("Authorization") token: String,
+            @Path("id") id: String,
+            @Part file: MultipartBody.Part
+    ): Response<ImageResponse>
+
+
 }

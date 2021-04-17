@@ -32,9 +32,16 @@
             <ImageView
                 android:id="@+id/imgProduct"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
+                android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:src="@drawable/upload" />
+
+            <TextView
+                android:id="@+id/txtCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="Category" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -82,20 +89,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:hint="Description" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp">
-
-                <EditText
-                    android:id="@+id/etxtCategory"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:hint="Category" />
 
             </com.google.android.material.textfield.TextInputLayout>
 

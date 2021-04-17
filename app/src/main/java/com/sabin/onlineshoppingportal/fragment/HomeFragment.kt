@@ -2,6 +2,7 @@ package com.sabin.onlineshoppingportal.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.sabin.onlineshoppingportal.GoogleMapActivity
 import com.sabin.onlineshoppingportal.R
 import com.sabin.onlineshoppingportal.UpdateProfileActivity
@@ -26,6 +28,7 @@ class HomeFragment : Fragment() {
     private lateinit var topRecycler : RecyclerView
     private var products = mutableListOf<Product>()
     private lateinit var imgIcon : ImageView
+    private lateinit var swipe : SwipeRefreshLayout
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -33,6 +36,21 @@ class HomeFragment : Fragment() {
         topRecycler = view.findViewById(R.id.topRecycler)
 
         imgIcon = view.findViewById(R.id.imgIcon)
+        swipe = view.findViewById(R.id.swipe)
+
+        swipe.setOnRefreshListener {
+            Handler().postDelayed(Runnable {
+                runBlocking {
+                    deleteProducts().collect()
+                    loadProduct().collect()
+                    getProduct().collect{value -> products = value.toMutableList().asReversed() }
+                }
+                val adapter = ProductAdapter(products, requireContext())
+                topRecycler.adapter = adapter
+                topRecycler.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                swipe.isRefreshing = false
+            }, 1000)
+        }
 
         imgIcon.setOnClickListener {
             val intent = Intent(activity, GoogleMapActivity::class.java)
