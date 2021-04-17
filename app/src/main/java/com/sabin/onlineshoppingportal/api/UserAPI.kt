@@ -43,9 +43,11 @@ interface UserAPI {
 
     @Multipart
     @PUT("user/{id}/image")
-    suspend fun uploadImage(
+    suspend fun uploadUserImage(
             @Header("Authorization") token: String,
             @Path("id") id: String,
             @Part file: MultipartBody.Part
     ): Response<ImageResponse>
+
+
 }

@@ -142,7 +142,7 @@ class UpdateProfileActivity : AppCompatActivity() {
             CoroutineScope(Dispatchers.IO).launch {
                 try {
                     val userRepository  = UserRepository()
-                    val response = userRepository.uploadImage(uId, body)
+                    val response = userRepository.uploadUserImage(uId, body)
                     if (response.success == true) {
                         withContext(Dispatchers.Main) {
 
@@ -184,8 +184,6 @@ class UpdateProfileActivity : AppCompatActivity() {
         popupMenu.show()
     }
 
-
-
     private var REQUEST_GALLERY_CODE = 0
     private var REQUEST_CAMERA_CODE = 1
     private var imageUrl: String? = null
@@ -207,7 +205,7 @@ class UpdateProfileActivity : AppCompatActivity() {
             if (requestCode == REQUEST_GALLERY_CODE && data != null) {
                 val selectedImage = data.data
                 val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
-                val contentResolver = this.contentResolver
+                val contentResolver = contentResolver
                 val cursor =
                         contentResolver?.query(selectedImage!!, filePathColumn, null, null, null)
                 cursor!!.moveToFirst()
@@ -232,7 +230,7 @@ class UpdateProfileActivity : AppCompatActivity() {
         var file: File? = null
         return try {
             file = File(
-                    this.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+                    getExternalFilesDir(Environment.DIRECTORY_PICTURES)
                             .toString() + File.separator + fileNameToSave
             )
             file.createNewFile()

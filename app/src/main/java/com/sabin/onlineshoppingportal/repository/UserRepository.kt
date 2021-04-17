@@ -52,10 +52,10 @@ class UserRepository
 
     // User Image
 
-    suspend fun uploadImage(id: String, body: MultipartBody.Part)
+    suspend fun uploadUserImage(id: String, body: MultipartBody.Part)
             : ImageResponse {
         return apiRequest {
-            userAPI.uploadImage(ServiceBuilder.token!!, id, body)
+            userAPI.uploadUserImage(ServiceBuilder.token!!, id, body)
         }
     }
 

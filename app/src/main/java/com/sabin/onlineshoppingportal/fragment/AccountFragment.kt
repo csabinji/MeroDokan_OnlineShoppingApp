@@ -1,5 +1,6 @@
 package com.sabin.onlineshoppingportal.fragment
 
+import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -108,6 +109,7 @@ class AccountFragment : Fragment() {
         btnLogout.setOnClickListener {
             ServiceBuilder.token.equals("")
             ServiceBuilder.accountType.equals("")
+            getSharedPref()
             startActivity(
                 Intent(
                context!!,
@@ -116,6 +118,13 @@ class AccountFragment : Fragment() {
             )
         }
 
+
         return view
+    }
+    private fun getSharedPref() {
+        val sharedPref = requireContext().getSharedPreferences("user", MODE_PRIVATE)
+        val editor = sharedPref.edit()
+        editor.clear()
+        editor.apply()
     }
 }
