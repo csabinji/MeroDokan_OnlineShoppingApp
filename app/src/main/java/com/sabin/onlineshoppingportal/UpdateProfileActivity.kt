@@ -35,10 +35,10 @@ import java.util.*
 
 class UpdateProfileActivity : AppCompatActivity() {
 
-    private lateinit var etxtFname : EditText
-    private lateinit var etxtUsername : EditText
-    private lateinit var etxtEmail : EditText
-    private lateinit var etxtPhone : EditText
+    private lateinit var etxtUFname : EditText
+    private lateinit var etxtUUsername : EditText
+    private lateinit var etxtUEmail : EditText
+    private lateinit var etxtUPhone : EditText
     private lateinit var etxtStreet : EditText
     private lateinit var etxtCity : EditText
     private lateinit var etxtZip : EditText
@@ -52,10 +52,10 @@ class UpdateProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_update_profile)
 
-        etxtFname = findViewById(R.id.etxtFname)
-        etxtUsername = findViewById(R.id.etxtUsername)
-        etxtEmail = findViewById(R.id.etxtEmail)
-        etxtPhone = findViewById(R.id.etxtPhone)
+        etxtUFname = findViewById(R.id.etxtUFname)
+        etxtUUsername = findViewById(R.id.etxtUUsername)
+        etxtUEmail = findViewById(R.id.etxtUEmail)
+        etxtUPhone = findViewById(R.id.etxtUPhone)
         etxtStreet = findViewById(R.id.etxtStreet)
         etxtCity = findViewById(R.id.etxtCity)
         etxtZip = findViewById(R.id.etxtZip)
@@ -72,15 +72,16 @@ class UpdateProfileActivity : AppCompatActivity() {
                     val user = response.data!!
                     val image = ServiceBuilder.loadImagePath() + user.image
                     withContext(Dispatchers.Main) {
-                        etxtFname.setText("${response.data?.fullname}")
-                        etxtUsername.setText("${response.data?.username}")
-                        etxtEmail.setText("${response.data?.email}")
-                        etxtPhone.setText("${response.data?.phone}")
+                        etxtUFname.setText("${response.data?.fullname}")
+                        etxtUUsername.setText("${response.data?.username}")
+                        etxtUEmail.setText("${response.data?.email}")
+                        etxtUPhone.setText("${response.data?.phone}")
                         etxtCity.setText("${response.data?.city}")
                         etxtState.setText("${response.data?.state}")
                         etxtStreet.setText("${response.data?.street}")
                         etxtZip.setText("${response.data?.zip}")
-                        uid = response.data!!._id.toString()
+//                        uid = response.data!!._id.toString()
+                        uid = "6076c084758f0515ecb02073"
 
                         if (!user.image.equals("")) {
                             Glide.with(this@UpdateProfileActivity)
@@ -100,10 +101,10 @@ class UpdateProfileActivity : AppCompatActivity() {
         }
 
         btnUpdate.setOnClickListener {
-            val fullname = etxtFname.text.toString()
-            val username = etxtUsername.text.toString()
-            val email = etxtEmail.text.toString()
-            val phone = etxtPhone.text.toString()
+            val fullname = etxtUFname.text.toString()
+            val username = etxtUUsername.text.toString()
+            val email = etxtUEmail.text.toString()
+            val phone = etxtUPhone.text.toString()
             val city = etxtCity.text.toString()
             val street = etxtStreet.text.toString()
             val state = etxtState.text.toString()
@@ -123,6 +124,9 @@ class UpdateProfileActivity : AppCompatActivity() {
                         withContext(Dispatchers.Main){
                             Toast.makeText(this@UpdateProfileActivity, response.message.toString(), Toast.LENGTH_SHORT).show()
                         }
+
+                        val intent = Intent(this@UpdateProfileActivity, DashboardActivity::class.java)
+                        startActivity(intent)
                     }
                 }catch (ex: Exception){
                     withContext(Dispatchers.Main){
