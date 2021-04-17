@@ -10,7 +10,7 @@ object ServiceBuilder {
 
 
 
-//    private const val BASE_URL = "http://localhost:90/"
+//    private const val BASE_URL = "http://192.168.137.114:90/"
 
 
     var token: String? = null

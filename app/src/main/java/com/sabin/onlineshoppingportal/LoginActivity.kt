@@ -88,12 +88,12 @@ class LoginActivity : AppCompatActivity(){
     }
 
     private fun saveMe(){
-        val email = etxtUser.text.toString()
+        val username = etxtUser.text.toString()
         val password = etxtPass.text.toString()
         val sharedPref = getSharedPreferences("user", MODE_PRIVATE)
         val editor = sharedPref.edit()
-        editor.putBoolean("isLoggedIn", true)
-        editor.putString("email", email)
+       // editor.putBoolean("isLoggedIn", true)
+        editor.putString("username", username)
         editor.putString("password", password)
         editor.apply()
     }

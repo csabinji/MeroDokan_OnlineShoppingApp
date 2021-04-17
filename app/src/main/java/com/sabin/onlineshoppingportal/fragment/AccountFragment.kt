@@ -10,10 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
-import com.sabin.onlineshoppingportal.OrderActivity
-import com.sabin.onlineshoppingportal.ProductListActivity
-import com.sabin.onlineshoppingportal.R
-import com.sabin.onlineshoppingportal.UpdateProfileActivity
+import com.sabin.onlineshoppingportal.*
 import com.sabin.onlineshoppingportal.api.ServiceBuilder
 import com.sabin.onlineshoppingportal.repository.UserRepository
 import kotlinx.coroutines.CoroutineScope
@@ -31,6 +28,7 @@ class AccountFragment : Fragment() {
     private lateinit var btnEdit : Button
     private lateinit var btnOrder : Button
     private lateinit var btnProduct : Button
+    private lateinit var btnLogout : Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,6 +46,7 @@ class AccountFragment : Fragment() {
         btnEdit = view.findViewById(R.id.btnEdit)
         btnOrder = view.findViewById(R.id.btnOrder)
         btnProduct = view.findViewById(R.id.btnProduct)
+        btnLogout = view.findViewById(R.id.btnLogout)
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
@@ -92,6 +91,17 @@ class AccountFragment : Fragment() {
                 val intent = Intent(activity, ProductListActivity::class.java)
                 startActivity(intent)
             }
+        }
+
+        btnLogout.setOnClickListener {
+            ServiceBuilder.token.equals("")
+            ServiceBuilder.accountType.equals("")
+            startActivity(
+                Intent(
+               context!!,
+                    LoginActivity::class.java
+                )
+            )
         }
 
         return view
