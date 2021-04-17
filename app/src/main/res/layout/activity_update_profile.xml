@@ -29,12 +29,12 @@
         android:layout_marginHorizontal="35dp"
         android:orientation="vertical">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:src="@drawable/upload"
             android:id="@+id/imgProfile"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
             android:layout_gravity="center"
-            android:src="@drawable/upload" />
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"/>
 
         <TextView
             android:layout_width="match_parent"

@@ -61,7 +61,7 @@ class DashboardActivity : AppCompatActivity(), SensorEventListener {
         if (!checkSensor())
             return
         else {
-            sensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT)
+            sensor = sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY)
             sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL)
         }
 
@@ -111,20 +111,6 @@ class DashboardActivity : AppCompatActivity(), SensorEventListener {
         }
     }
 
-    private fun populateSList(){
-
-        lstTitle = ArrayList<String>()
-        lstTitle.add("Home")
-        lstTitle.add("Add Product")
-        lstTitle.add("Account")
-
-        lstFragments = ArrayList<Fragment>()
-        lstFragments.add(HomeFragment())
-        lstFragments.add(AddProductFragment())
-        lstFragments.add(AccountFragment())
-
-
-    }
     private fun requestPermission() {
         ActivityCompat.requestPermissions(
                 this@DashboardActivity,
@@ -148,7 +134,7 @@ class DashboardActivity : AppCompatActivity(), SensorEventListener {
 
     private fun checkSensor(): Boolean {
         var flag = true
-        if (sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT) == null) {
+        if (sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY) == null) {
             flag = false
         }
         return flag
@@ -158,13 +144,13 @@ class DashboardActivity : AppCompatActivity(), SensorEventListener {
         val values = event!!.values[0]
         val params = this.window.attributes
 
-        if(values < sensor!!.maximumRange){
-            params.flags = params.flags or WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
-            params.screenBrightness = -1f
-            window.attributes = params
-        }else {
+        if (values < sensor!!.maximumRange) {
             params.flags = params.flags or WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
             params.screenBrightness = 0f
+            window.attributes = params
+        } else {
+            params.flags = params.flags or WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+            params.screenBrightness = -1f
             window.attributes = params
         }
     }
