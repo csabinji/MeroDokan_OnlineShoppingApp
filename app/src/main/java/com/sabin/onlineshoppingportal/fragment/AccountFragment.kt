@@ -25,7 +25,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class AccountFragment : Fragment(), SensorEventListener {
+class AccountFragment : Fragment() {
 
     private lateinit var txtusername : TextView
     private lateinit var txtFname : TextView
@@ -40,9 +40,6 @@ class AccountFragment : Fragment(), SensorEventListener {
     private lateinit var btnOrder : Button
     private lateinit var btnProduct : Button
     private lateinit var btnLogout : Button
-
-    private var gyrosensor : Sensor?=null
-    private var sensorManager : SensorManager?=null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -126,22 +123,7 @@ class AccountFragment : Fragment(), SensorEventListener {
                 )
             )
         }
-
-        sensorManager = requireContext().getSystemService(SENSOR_SERVICE) as SensorManager
-        if (checkgyrosensor()){
-            gyrosensor = sensorManager!!.getDefaultSensor(Sensor.TYPE_GYROSCOPE)
-            sensorManager!!.registerListener(this, gyrosensor, SensorManager.SENSOR_DELAY_NORMAL)
-        }
-
         return view
-    }
-
-    private fun checkgyrosensor(): Boolean {
-        var flag = true
-        if (sensorManager!!.getDefaultSensor(Sensor.TYPE_GYROSCOPE)==null){
-            flag = false
-        }
-        return flag
     }
 
     private fun getSharedPref() {
@@ -149,28 +131,5 @@ class AccountFragment : Fragment(), SensorEventListener {
         val editor = sharedPref.edit()
         editor.clear()
         editor.apply()
-    }
-
-    override fun onSensorChanged(event: SensorEvent?) {
-        val values = event!!.values[1]
-        if (values > 5) {
-            CoroutineScope(Dispatchers.IO).launch {
-                try{
-                    ServiceBuilder.token.equals("")
-                    ServiceBuilder.accountType.equals("")
-                    getSharedPref()
-                    startActivity(
-                            Intent(
-                                    context!!,
-                                    LoginActivity::class.java
-                            )
-                    )
-                }catch (ex : Exception){
-                }
-            }
-        }
-    }
-    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
-        TODO("Not yet implemented")
     }
 }

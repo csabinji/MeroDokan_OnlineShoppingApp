@@ -1,6 +1,10 @@
 package com.sabin.onlineshoppingportal
 
 import android.content.Intent
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -13,7 +17,7 @@ import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class SignUpActivity : AppCompatActivity(){
+class SignUpActivity : AppCompatActivity(), SensorEventListener{
 
     private lateinit var etxtFname : EditText
     private lateinit var etxtEmail : EditText
@@ -24,6 +28,9 @@ class SignUpActivity : AppCompatActivity(){
     private lateinit var btnSignup : Button
     private lateinit var txtLogin : TextView
     private lateinit var selectedItem : String
+
+    private var gyrosensor : Sensor?=null
+    private var sensorManager : SensorManager?=null
 
     private val users = arrayOf("Seller","Buyer")
 
@@ -69,6 +76,12 @@ class SignUpActivity : AppCompatActivity(){
                     }
                 }
 
+        sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
+        if (checkgyrosensor()){
+            gyrosensor = sensorManager!!.getDefaultSensor(Sensor.TYPE_GYROSCOPE)
+            sensorManager!!.registerListener(this, gyrosensor, SensorManager.SENSOR_DELAY_NORMAL)
+        }
+
         btnSignup.setOnClickListener {
             val fullname = etxtFname.text.toString()
             val username = etxtUser.text.toString()
@@ -109,5 +122,33 @@ class SignUpActivity : AppCompatActivity(){
                 }
             }
         }
+    }
+    private fun checkgyrosensor(): Boolean {
+        var flag = true
+        if (sensorManager!!.getDefaultSensor(Sensor.TYPE_GYROSCOPE)==null){
+            flag = false
+        }
+        return flag
+    }
+
+    override fun onSensorChanged(event: SensorEvent?) {
+        val values = event!!.values[1]
+        if(values>5){
+            CoroutineScope(Dispatchers.IO).launch {
+                try{
+                        val intent = Intent(this@SignUpActivity, LoginActivity::class.java)
+                        startActivity(intent)
+                }catch(ex : Exception) {
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(this@SignUpActivity,
+                                "Error : $ex", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+    }
+
+    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+
     }
 }
