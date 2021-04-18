@@ -19,6 +19,9 @@ class UserUpdateTest {
     fun checkUpdateUser(){
         ServiceBuilder.token="Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MDc4Mjc1MTkyNjc1ZTJmZjBlZThiZTciLCJpYXQiOjE2MTg2NjgxODV9.bJSRXUPWmrG-i89EFwz-5CLlAlvK-P8XKgS8INiUQUk"
 
+        onView(ViewMatchers.withId(R.id.imgProduct))
+                .perform()
+
         onView(ViewMatchers.withId(R.id.etxtUFname))
                 .perform(ViewActions.typeText("Sabin Chapagain"))
 
