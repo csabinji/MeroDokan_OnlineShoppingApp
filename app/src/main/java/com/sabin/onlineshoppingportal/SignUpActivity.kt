@@ -66,7 +66,6 @@ class SignUpActivity : AppCompatActivity(){
                             parent: AdapterView<*>?, view: View?, position: Int, id: Long
                     ) {
                         selectedItem = parent?.getItemAtPosition(position).toString()
-                        Toast.makeText(this@SignUpActivity, "$selectedItem", Toast.LENGTH_SHORT).show()
                     }
                 }
 
@@ -108,9 +107,7 @@ class SignUpActivity : AppCompatActivity(){
                         }
                     }
                 }
-
             }
         }
     }
-
 }

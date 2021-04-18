@@ -3,6 +3,8 @@ package com.sabin.onlineshoppingportal
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View.VISIBLE
+import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +21,7 @@ import kotlinx.coroutines.withContext
 class OrderActivity : AppCompatActivity() {
 
     private lateinit var topRecycler : RecyclerView
+    private lateinit var txtmessage : TextView
     private var lstOrder = mutableListOf<Order>()
     private var isSeller:Boolean = false
 
@@ -27,41 +30,42 @@ class OrderActivity : AppCompatActivity() {
         setContentView(R.layout.activity_order)
 
         topRecycler = findViewById(R.id.topRecycler)
+        txtmessage = findViewById(R.id.txtmessage)
 
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val userRepository = UserRepository()
-                val response = userRepository.getSingleUser()
-                if(response.success == true){
-                    if(response.data?.accountType=="Seller"){
-                        isSeller=true
-                        val orderRepository = OrderRepository()
-                        val response = orderRepository.getSOrder()
-                        if (response.success == true) {
-                            lstOrder = response.data!!
-                            withContext(Dispatchers.Main) {
-                                topRecycler.adapter = OrderAdapter(lstOrder, this@OrderActivity!!)
-                                topRecycler.layoutManager = LinearLayoutManager(this@OrderActivity)
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
+                    val userRepository = UserRepository()
+                    val response = userRepository.getSingleUser()
+                    if (response.success == true) {
+                        if (response.data?.accountType == "Seller") {
+                            isSeller = true
+                            val orderRepository = OrderRepository()
+                            val response = orderRepository.getSOrder()
+                            if (response.success == true) {
+                                lstOrder = response.data!!
+                                withContext(Dispatchers.Main) {
+                                    topRecycler.adapter = OrderAdapter(lstOrder, this@OrderActivity!!)
+                                    topRecycler.layoutManager = LinearLayoutManager(this@OrderActivity)
+                                }
+                            }
+                        }
+                        if (response.data?.accountType == "Buyer") {
+                            isSeller = false
+                            val orderRepository = OrderRepository()
+                            val response = orderRepository.getOrder()
+                            if (response.success == true) {
+                                lstOrder = response.data!!
+                                withContext(Dispatchers.Main) {
+                                    topRecycler.adapter = OrderAdapter(lstOrder, this@OrderActivity!!)
+                                    topRecycler.layoutManager = LinearLayoutManager(this@OrderActivity)
+                                }
                             }
                         }
                     }
-                    if(response.data?.accountType=="Buyer"){
-                        isSeller=false
-                        val orderRepository = OrderRepository()
-                        val response = orderRepository.getOrder()
-                        if (response.success == true) {
-                            lstOrder = response.data!!
-                            withContext(Dispatchers.Main) {
-                                topRecycler.adapter = OrderAdapter(lstOrder, this@OrderActivity!!)
-                                topRecycler.layoutManager = LinearLayoutManager(this@OrderActivity)
-                            }
-                        }
-                    }
+
+                } catch (ex: Exception) {
+
                 }
-
-            } catch (ex: Exception) {
-
             }
-        }
         }
     }

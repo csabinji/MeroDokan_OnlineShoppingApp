@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -30,40 +31,33 @@ class CartFragment : Fragment() {
 
         topRecycler = view.findViewById(R.id.topRecycler)
 
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val cartRepository = CartRepository()
-                val response = cartRepository.getCart()
-                withContext(Dispatchers.Main) {
-                    Toast.makeText(getActivity(),response.success.toString(), Toast.LENGTH_SHORT)
-                            .show()
-                }
-                if (response.success == true) {
-                    lstCart = response.data!!
-                    withContext(Dispatchers.Main) {
-                        topRecycler.adapter = CartAdapter(lstCart, context!!)
-                        topRecycler.layoutManager = LinearLayoutManager(context)
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
+                    val cartRepository = CartRepository()
+                    val response = cartRepository.getCart()
+                    if (response.success == true) {
+                        lstCart = response.data!!
+                        withContext(Dispatchers.Main) {
+                            topRecycler.adapter = CartAdapter(lstCart, context!!)
+                            topRecycler.layoutManager = LinearLayoutManager(context)
+                        }
+                    } else {
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(getActivity(), "ffh", Toast.LENGTH_SHORT)
+                                    .show()
+                        }
                     }
-                }
-                else{
+                } catch (ex: Exception) {
                     withContext(Dispatchers.Main) {
-                        Toast.makeText(getActivity(),"", Toast.LENGTH_SHORT)
-                                .show()
+                        Log.d("Error", ex.localizedMessage)
+                        Toast.makeText(
+                                context!!,
+                                ex.localizedMessage,
+                                Toast.LENGTH_SHORT
+                        ).show()
                     }
-                }
-            } catch (ex: Exception) {
-                withContext(Dispatchers.Main) {
-                    Log.d("Error", ex.localizedMessage)
-                    Toast.makeText(
-                            context!!,
-                            ex.localizedMessage,
-                            Toast.LENGTH_SHORT
-                    ).show()
                 }
             }
-        }
-
         return view
     }
-
 }

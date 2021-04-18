@@ -80,8 +80,8 @@ class UpdateProfileActivity : AppCompatActivity() {
                         etxtState.setText("${response.data?.state}")
                         etxtStreet.setText("${response.data?.street}")
                         etxtZip.setText("${response.data?.zip}")
-//                        uid = response.data!!._id.toString()
-                        uid = "6076c084758f0515ecb02073"
+                        uid = response.data!!._id.toString()
+//                        uid = "6076c084758f0515ecb02073"
 
                         if (!user.image.equals("")) {
                             Glide.with(this@UpdateProfileActivity)

@@ -38,17 +38,20 @@ class SplashActivity : AppCompatActivity() {
                             )
                     )
                     finish()
-                    delay(1000)
+                    delay(2000)
                 }
             }
         } else {
-            startActivity(
-                    Intent(
-                            this@SplashActivity,
-                            LoginActivity::class.java
-                    )
-            )
-            finish()
+            CoroutineScope(Dispatchers.IO).launch {
+                delay(2000)
+                startActivity(
+                        Intent(
+                                this@SplashActivity,
+                                LoginActivity::class.java
+                        )
+                )
+                finish()
+            }
         }
     }
 

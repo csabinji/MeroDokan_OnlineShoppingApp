@@ -1,7 +1,12 @@
 package com.sabin.onlineshoppingportal.fragment
 
 import android.content.Context.MODE_PRIVATE
+import android.content.Context.SENSOR_SERVICE
 import android.content.Intent
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.sabin.onlineshoppingportal.*
@@ -19,7 +25,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class AccountFragment : Fragment() {
+class AccountFragment : Fragment(), SensorEventListener {
 
     private lateinit var txtusername : TextView
     private lateinit var txtFname : TextView
@@ -34,6 +40,9 @@ class AccountFragment : Fragment() {
     private lateinit var btnOrder : Button
     private lateinit var btnProduct : Button
     private lateinit var btnLogout : Button
+
+    private var gyrosensor : Sensor?=null
+    private var sensorManager : SensorManager?=null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -118,13 +127,50 @@ class AccountFragment : Fragment() {
             )
         }
 
+        sensorManager = requireContext().getSystemService(SENSOR_SERVICE) as SensorManager
+        if (checkgyrosensor()){
+            gyrosensor = sensorManager!!.getDefaultSensor(Sensor.TYPE_GYROSCOPE)
+            sensorManager!!.registerListener(this, gyrosensor, SensorManager.SENSOR_DELAY_NORMAL)
+        }
 
         return view
     }
+
+    private fun checkgyrosensor(): Boolean {
+        var flag = true
+        if (sensorManager!!.getDefaultSensor(Sensor.TYPE_GYROSCOPE)==null){
+            flag = false
+        }
+        return flag
+    }
+
     private fun getSharedPref() {
         val sharedPref = requireContext().getSharedPreferences("user", MODE_PRIVATE)
         val editor = sharedPref.edit()
         editor.clear()
         editor.apply()
+    }
+
+    override fun onSensorChanged(event: SensorEvent?) {
+        val values = event!!.values[1]
+        if (values > 5) {
+            CoroutineScope(Dispatchers.IO).launch {
+                try{
+                    ServiceBuilder.token.equals("")
+                    ServiceBuilder.accountType.equals("")
+                    getSharedPref()
+                    startActivity(
+                            Intent(
+                                    context!!,
+                                    LoginActivity::class.java
+                            )
+                    )
+                }catch (ex : Exception){
+                }
+            }
+        }
+    }
+    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+        TODO("Not yet implemented")
     }
 }

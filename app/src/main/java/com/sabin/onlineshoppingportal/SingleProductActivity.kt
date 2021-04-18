@@ -1,8 +1,10 @@
 package com.sabin.onlineshoppingportal
 
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View.GONE
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -31,6 +33,7 @@ class SingleProductActivity : AppCompatActivity() {
     private lateinit var txtPrice : TextView
     private lateinit var txtDes : TextView
     private lateinit var etxtQty : TextView
+    private lateinit var txtQty : TextView
     private lateinit var btnCart : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +45,7 @@ class SingleProductActivity : AppCompatActivity() {
         txtCategory = findViewById(R.id.txtCategory)
         txtPrice = findViewById(R.id.txtPrice)
         txtDes = findViewById(R.id.txtDes)
+        txtQty = findViewById(R.id.txtQty)
         etxtQty = findViewById(R.id.etxtQty)
         btnCart = findViewById(R.id.btnCart)
 
@@ -59,6 +63,12 @@ class SingleProductActivity : AppCompatActivity() {
                 .fitCenter()
                 .into(imgProduct)
 
+        if(ServiceBuilder.accountType=="Seller"){
+                etxtQty.visibility = GONE
+                btnCart.visibility = GONE
+            txtQty.visibility = GONE
+        }
+
         btnCart.setOnClickListener {
             val quantity = etxtQty.text.toString()
 
@@ -74,6 +84,8 @@ class SingleProductActivity : AppCompatActivity() {
                             withContext(Main) {
                                 showLowPriorityNotification()
                                 Toast.makeText(this@SingleProductActivity, "Product Added to Cart", Toast.LENGTH_SHORT).show()
+                                val intent = Intent(this@SingleProductActivity, DashboardActivity::class.java)
+                                startActivity(intent)
                             }
                         }
 
@@ -81,9 +93,6 @@ class SingleProductActivity : AppCompatActivity() {
 
                     }
                 }
-            }
-            else{
-                Toast.makeText(this@SingleProductActivity, "Seller can't add product to Cart", Toast.LENGTH_SHORT).show()
             }
         }
     }
